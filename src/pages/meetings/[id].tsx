@@ -1,31 +1,51 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 
 import Typography from "@mui/material/Typography";
 import { Paper, Tab, Tabs } from "@mui/material";
 import React from "react";
 import { apiBaseUrl, serverUrl } from "@/consts/api/urls";
-import { MeetingDetailSchema } from "@/consts/meetings/types";
+import {
+  MeetingDetailSchema,
+  MeetingListSchema,
+} from "@/consts/meetings/types";
+import { getMeetingDetails, getMeetingsList } from "@/api/api_methods";
+import { ParsedUrlQuery } from "querystring";
+import { detailPageParams } from "@/consts/interfaces";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  // @ts-ignore
-  const id = context.params.id;
-  const response = await fetch(`${apiBaseUrl}/meetings/${id}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "GET",
+export const getStaticPaths = async () => {
+  const meetings: MeetingListSchema[] = await getMeetingsList("pl");
+
+  const paths = meetings.map((meeting) => {
+    return {
+      params: { id: meeting.id.toString() },
+    };
   });
-  const meeting: MeetingDetailSchema = await response.json();
+
+  return {
+    paths,
+
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { id } = context.params as detailPageParams;
+  const meeting: MeetingDetailSchema = await getMeetingDetails(
+    id,
+    context.locale ?? "pl"
+  );
 
   return {
     props: {
       meeting,
+      ...(await serverSideTranslations(context.locale ?? "pl", ["common"])),
     },
   };
 };
 
 export default function MeetingDetail(
-  data: InferGetServerSidePropsType<typeof getServerSideProps>
+  data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   return (
     <>
@@ -41,7 +61,7 @@ export default function MeetingDetail(
         </Typography>
         <Typography variant={"body2"}>{data.meeting.description}</Typography>
 
-        <Typography variant={"h5"}>Addres: {data.meeting.address}</Typography>
+        <Typography variant={"h5"}>Adres: {data.meeting.address}</Typography>
         <iframe
           src={data.meeting.address_map_link}
           allowFullScreen={false}

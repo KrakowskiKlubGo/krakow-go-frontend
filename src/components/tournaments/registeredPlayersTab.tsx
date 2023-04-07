@@ -10,23 +10,25 @@ import {
   TableRow,
 } from "@mui/material";
 import { RegisteredPlayersSchema } from "@/consts/tournamens/types";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   registered_players: RegisteredPlayersSchema[];
 }
 
 const RegisteredPlayersPanel: React.FC<Props> = ({ registered_players }) => {
+  const { t } = useTranslation("registration");
   return (
     <>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">Kolejność</TableCell>
-              <TableCell align="right">Imię i nazwisko</TableCell>
-              <TableCell align="right">Siła</TableCell>
-              <TableCell align="right">Kraj</TableCell>
-              <TableCell align="right">Klub</TableCell>
+              <TableCell align="right">{t("order")}</TableCell>
+              <TableCell align="right">{t("name")}</TableCell>
+              <TableCell align="right">{t("rank")}</TableCell>
+              <TableCell align="right">{t("country")}</TableCell>
+              <TableCell align="right">{t("club_city")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

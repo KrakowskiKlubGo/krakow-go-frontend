@@ -1,29 +1,49 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Box from "@mui/material/Box";
 
-import Typography from "@mui/material/Typography";
 import { Paper, Tab, Tabs } from "@mui/material";
 import React from "react";
 import TournamentInfoPanel from "../../components/tournaments/tournamentInfoTab";
-import { apiBaseUrl } from "@/consts/api/urls";
 import RegisteredPlayersPanel from "../../components/tournaments/registeredPlayersTab";
 import RegistrationForm from "../../components/tournaments/RegistrationForm";
-import { TournamentDetailSchema } from "../../consts/tournamens/types";
+import { TournamentListSchema } from "@/consts/tournamens/types";
+import { GetTournamentDetails, getTournamentsList } from "@/api/api_methods";
+import { detailPageParams } from "@/consts/interfaces";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  // @ts-ignore
-  const id = context.params.id;
-  const response = await fetch(`${apiBaseUrl}/tournaments/${id}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "GET",
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+  const tournaments: TournamentListSchema[] = await getTournamentsList("pl");
+  const validLocales = locales && Array.isArray(locales) ? locales : [];
+
+  const paths = tournaments.flatMap((tournament) => {
+    return validLocales.map((locale) => {
+      return {
+        params: { id: tournament.id.toString() },
+        locale: locale,
+      };
+    });
   });
-  const tournament: TournamentDetailSchema = await response.json();
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { id } = context.params as detailPageParams;
+
+  const tournament = await GetTournamentDetails(id, context.locale ?? "pl");
 
   return {
     props: {
       tournament,
+      ...(await serverSideTranslations(context.locale ?? "pl", [
+        "common",
+        "registration",
+        "tournaments",
+      ])),
     },
   };
 };
@@ -58,12 +78,13 @@ function a11yProps(index: number) {
 }
 
 export default function TournamentDetail(
-  data: InferGetServerSidePropsType<typeof getServerSideProps>
+  data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const [value, setValue] = React.useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const { t } = useTranslation(["tournaments", "registration"]);
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -72,9 +93,9 @@ export default function TournamentDetail(
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Informacje" {...a11yProps(0)} />
-          <Tab label="Rejestracja" {...a11yProps(1)} />
-          <Tab label="Zarejestrowani gracze" {...a11yProps(2)} />
+          <Tab label={t("info_tab")} {...a11yProps(0)} />
+          <Tab label={t("registration_tab")} {...a11yProps(1)} />
+          <Tab label={t("registered_players_tab")} {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

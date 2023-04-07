@@ -13,7 +13,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import NextLink from "next/link";
 import { Link } from "@mui/material";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 interface Props {
   /**
@@ -26,8 +29,10 @@ interface Props {
 const drawerWidth = 240;
 
 export default function MainAppBar(props: Props) {
+  const { i18n, t } = useTranslation("common");
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const router = useRouter();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -36,7 +41,7 @@ export default function MainAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Krakowski Klub Go
+        {t("title")}
       </Typography>
       <Divider />
       <List>
@@ -73,12 +78,27 @@ export default function MainAppBar(props: Props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            Krakowski Klub Go
+            {t("title")}
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Button sx={{ color: "#fff" }}>
+            <Button>
               <Link sx={{ color: "#fff" }} href={"/"}>
                 Start
+              </Link>
+            </Button>
+            <Button>
+              <Link sx={{ color: "#fff" }} href={"/about"}>
+                O nas
+              </Link>
+            </Button>
+            <Button>
+              <Link
+                sx={{ color: "#fff" }}
+                href={router.asPath}
+                locale={i18n.language === "pl" ? "en" : false}
+                component={NextLink}
+              >
+                {i18n.language === "pl" ? "English" : "Polski"}
               </Link>
             </Button>
           </Box>

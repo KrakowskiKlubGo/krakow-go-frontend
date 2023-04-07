@@ -1,0 +1,10 @@
+{
+  "name": "Imię i nazwisko",
+  "last_name": "Nazwisko",
+  "first_name": "Imię",
+  "rank": "Siła",
+  "club_city": "Klub/Miasto",
+  "country": "Kraj",
+  "order": "Kolejność",
+  "register_button_text": "Zarejestruj"
+}

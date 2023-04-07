@@ -1,0 +1,10 @@
+{
+  "name": "Name",
+  "last_name": "Last Name",
+  "first_name": "First Name",
+  "rank": "Rank",
+  "club_city": "Club/City",
+  "country": "Country",
+  "register_button_text": "Register",
+  "order": "Order"
+}

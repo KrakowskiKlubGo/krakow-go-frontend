@@ -6,8 +6,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "@/utils/createEmotionCache";
 import { theme } from "@/utils/theme";
-import MainAppBar from "../components/navigation/main_navigation";
-import styles from "@/styles/Home.module.css";
+import MainAppBar from "../components/navigation/mainNavigation";
+import styles from "@/styles/Main.module.css";
+import "../styles/globals.css";
+import { appWithTranslation } from "next-i18next";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -16,7 +18,7 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-export default function MyApp(props: MyAppProps) {
+const MyApp = (props: MyAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
     <CacheProvider value={emotionCache}>
@@ -29,11 +31,14 @@ export default function MyApp(props: MyAppProps) {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
+        <link
+          href="https://fonts.googleapis.com/css?family=Varela+Round"
+          rel="stylesheet"
+        />
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-
         <MainAppBar />
         <main className={styles.main}>
           <Component {...pageProps} />
@@ -41,4 +46,6 @@ export default function MyApp(props: MyAppProps) {
       </ThemeProvider>
     </CacheProvider>
   );
-}
+};
+
+export default appWithTranslation(MyApp);
