@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid } from "@mui/material";
+import { Container, Grid, Stack } from "@mui/material";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -9,46 +9,34 @@ interface Props {
   image: StaticImport;
   header: string;
   description: string;
-  flip?: boolean;
+  direction?: "row" | "row-reverse";
 }
 
 export const ImageSection: React.FC<Props> = ({
   image,
   header,
   description,
-  flip = false,
+  direction = "row",
 }) => {
-  if (flip) {
-    return (
-      <>
-        <Grid container>
-          <Grid item container md={6}>
-            <Box padding={"5rem"}>
-              <Typography variant={"h5"}>{header}</Typography>
-              <Typography variant={"subtitle1"}>{description}</Typography>
-            </Box>
-          </Grid>
-          <Grid item md={6}>
-            <Image src={image} alt={""}></Image>
-          </Grid>
-        </Grid>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Grid container>
-          <Grid item md={6}>
-            <Image src={image} alt={""}></Image>
-          </Grid>
-          <Grid item container md={6}>
-            <Box padding={"5em"}>
-              <Typography variant={"h5"}>{header}</Typography>
-              <Typography variant={"subtitle1"}>{description}</Typography>
-            </Box>
-          </Grid>
-        </Grid>
-      </>
-    );
-  }
+  return (
+    <>
+      <Stack direction={{ xs: "column", md: direction }} spacing={0}>
+        <Container>
+          <Box padding={{ xs: "3rem", md: "5rem" }}>
+            <Typography variant={"h5"} paddingBottom={"1rem"}>
+              {header}
+            </Typography>
+            <Typography variant={"subtitle1"}>{description}</Typography>
+          </Box>
+        </Container>
+        <Container
+          sx={{
+            margin: "auto",
+          }}
+        >
+          <Image src={image} alt={""}></Image>
+        </Container>
+      </Stack>
+    </>
+  );
 };

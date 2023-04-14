@@ -5,6 +5,9 @@
   "rank": "Siła",
   "club_city": "Klub/Miasto",
   "country": "Kraj",
-  "order": "Kolejność",
-  "register_button_text": "Zarejestruj"
+  "order": "No.",
+  "register_button_text": "Zarejestruj",
+  "registration_limit_info": "",
+  "registered_players_list": "Lista zarejestrowanych graczy:",
+  "waiting_list": "Lista rezerwowa"
 }

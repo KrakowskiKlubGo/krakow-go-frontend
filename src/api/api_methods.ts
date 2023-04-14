@@ -36,14 +36,15 @@ export const postDataToBackend = async (api_url: string, data: any) => {
       body: JSON.stringify(data),
     });
     const result = await response.json();
-    if (response.status === 200) {
-      alert(`${result.message}`);
+
+    if (response.status === 201) {
+      return result.message;
     } else {
-      alert(result.non_field_errors[0]);
+      return result.non_field_errors[0];
     }
   } catch (error) {
     console.log(error);
-    return {};
+    return error;
   }
 };
 

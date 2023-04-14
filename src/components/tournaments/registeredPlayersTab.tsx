@@ -1,56 +1,44 @@
 import * as React from "react";
+import { Box } from "@mui/material";
 import {
-  Paper,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import { RegisteredPlayersSchema } from "@/consts/tournamens/types";
+  RegisteredPlayersSchema,
+  RegistrationInfoSchema,
+} from "@/consts/tournamens/types";
 import { useTranslation } from "next-i18next";
+import Typography from "@mui/material/Typography";
+import PlayersTable from "@/components/tournaments/PlayersTable";
 
 interface Props {
   registered_players: RegisteredPlayersSchema[];
+  registration_info: RegistrationInfoSchema;
 }
 
-const RegisteredPlayersPanel: React.FC<Props> = ({ registered_players }) => {
+const RegisteredPlayersPanel: React.FC<Props> = ({
+  registered_players,
+  registration_info,
+}) => {
   const { t } = useTranslation("registration");
+  const players_list = registered_players.slice(
+    0,
+    Math.min(registration_info.player_limit, registered_players.length)
+  );
+  const waiting_list = registered_players.slice(
+    registration_info.player_limit,
+    registered_players.length
+  );
+
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="right">{t("order")}</TableCell>
-              <TableCell align="right">{t("name")}</TableCell>
-              <TableCell align="right">{t("rank")}</TableCell>
-              <TableCell align="right">{t("country")}</TableCell>
-              <TableCell align="right">{t("club_city")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {registered_players.map((player, index) => (
-              <TableRow
-                key={index}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {index}
-                </TableCell>
-                <TableCell align="right">
-                  {player.first_name} {player.last_name}
-                </TableCell>
-                <TableCell align="right">{player.rank}</TableCell>
-                <TableCell align="right">{player.country}</TableCell>
-                <TableCell align="right">{player.city_club}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Box sx={{ m: 1, p: 1 }}>
+        <Typography variant={"h4"}>{t("registered_players_list")}</Typography>
+        <PlayersTable players={players_list} />
+        {waiting_list.length > 0 && (
+          <Box sx={{ paddingTop: 3 }}>
+            <Typography variant={"h4"}>{t("waiting_list")}</Typography>
+            <PlayersTable players={waiting_list} />
+          </Box>
+        )}
+      </Box>
     </>
   );
 };

@@ -17,6 +17,10 @@ import NextLink from "next/link";
 import { Link } from "@mui/material";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import pl_icon from "public/pl.svg";
+import en_icon from "public/en.svg";
+import CenteredBox from "@/components/common/CenteredBox";
 
 interface Props {
   /**
@@ -82,23 +86,36 @@ export default function MainAppBar(props: Props) {
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button>
-              <Link sx={{ color: "#fff" }} href={"/"}>
-                Start
-              </Link>
+              <Link href={"/"}>Start</Link>
             </Button>
             <Button>
-              <Link sx={{ color: "#fff" }} href={"/about"}>
-                O nas
-              </Link>
+              <Link href={"/about"}>O nas</Link>
             </Button>
             <Button>
               <Link
-                sx={{ color: "#fff" }}
                 href={router.asPath}
                 locale={i18n.language === "pl" ? "en" : false}
                 component={NextLink}
               >
-                {i18n.language === "pl" ? "English" : "Polski"}
+                {i18n.language === "pl" ? (
+                  <CenteredBox>
+                    <Image
+                      src={en_icon}
+                      width={40}
+                      height={20}
+                      alt={"English"}
+                    ></Image>
+                  </CenteredBox>
+                ) : (
+                  <CenteredBox>
+                    <Image
+                      src={pl_icon}
+                      width={40}
+                      height={20}
+                      alt={"Polski"}
+                    ></Image>
+                  </CenteredBox>
+                )}
               </Link>
             </Button>
           </Box>

@@ -10,6 +10,7 @@ import MainAppBar from "../components/navigation/mainNavigation";
 import styles from "@/styles/Main.module.css";
 import "../styles/globals.css";
 import { appWithTranslation } from "next-i18next";
+import { Container } from "@mui/material";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

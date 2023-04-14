@@ -1,16 +1,23 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Box from "@mui/material/Box";
 
-import { Paper, Tab, Tabs } from "@mui/material";
+import { Container, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import TournamentInfoPanel from "../../components/tournaments/tournamentInfoTab";
 import RegisteredPlayersPanel from "../../components/tournaments/registeredPlayersTab";
 import RegistrationForm from "../../components/tournaments/RegistrationForm";
-import { TournamentListSchema } from "@/consts/tournamens/types";
+import {
+  TournamentDetailSchema,
+  TournamentListSchema,
+} from "@/consts/tournamens/types";
 import { GetTournamentDetails, getTournamentsList } from "@/api/api_methods";
 import { detailPageParams } from "@/consts/interfaces";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import CenteredBox from "@/components/common/CenteredBox";
+import { serverUrl } from "@/consts/api/urls";
+import Image from "next/image";
+import { MeetingListSchema } from "@/consts/meetings/types";
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const tournaments: TournamentListSchema[] = await getTournamentsList("pl");
@@ -34,7 +41,10 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params as detailPageParams;
 
-  const tournament = await GetTournamentDetails(id, context.locale ?? "pl");
+  const tournament: TournamentDetailSchema[] = await GetTournamentDetails(
+    id,
+    context.locale ?? "pl"
+  );
 
   return {
     props: {
@@ -87,32 +97,64 @@ export default function TournamentDetail(
   const { t } = useTranslation(["tournaments", "registration"]);
   return (
     <>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label={t("info_tab")} {...a11yProps(0)} />
-          <Tab label={t("registration_tab")} {...a11yProps(1)} />
-          <Tab label={t("registered_players_tab")} {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        <TournamentInfoPanel
-          tournament_info={data.tournament.tournament_info}
-        />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <RegistrationForm
-          registration_info={data.tournament.registration_info}
-        />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <RegisteredPlayersPanel
-          registered_players={data.tournament.registered_players}
-        />
-      </TabPanel>
+      <Container>
+        <Paper>
+          <Stack
+            spacing={10}
+            direction={{ xs: "column", md: "row" }}
+            sx={{ m: 3, p: 3 }}
+          >
+            <Box>
+              <Image
+                alt=""
+                src={data.tournament.image}
+                width={300}
+                height={269}
+              />
+            </Box>
+
+            <Box>
+              <Typography variant={"h2"}>{data.tournament.name}</Typography>
+              <Typography variant={"h4"}>
+                {data.tournament.start_date}
+                {data.tournament.end_date !== null && (
+                  <span> - {data.tournament.end_date}</span>
+                )}
+              </Typography>
+            </Box>
+          </Stack>
+
+          <CenteredBox sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons
+              allowScrollButtonsMobile
+            >
+              <Tab label={t("info_tab")} {...a11yProps(0)} />
+              <Tab label={t("registration_tab")} {...a11yProps(1)} />
+              <Tab label={t("registered_players_tab")} {...a11yProps(2)} />
+            </Tabs>
+          </CenteredBox>
+          <TabPanel value={value} index={0}>
+            <TournamentInfoPanel
+              tournament_info={data.tournament.tournament_info}
+            />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <RegistrationForm
+              registration_info={data.tournament.registration_info}
+            />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <RegisteredPlayersPanel
+              registered_players={data.tournament.registered_players}
+              registration_info={data.tournament.registration_info}
+            />
+          </TabPanel>
+        </Paper>
+      </Container>
     </>
   );
 }

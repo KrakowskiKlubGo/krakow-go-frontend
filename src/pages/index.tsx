@@ -12,6 +12,9 @@ import MeetingCard from "@/components/index/meetingCard";
 import { getMeetingsList, getTournamentsList } from "@/api/api_methods";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { Container, Paper, Stack } from "@mui/material";
+import CenteredBox from "@/components/common/CenteredBox";
+import { padding } from "@mui/system";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const tournaments: TournamentListSchema[] = await getTournamentsList(
@@ -33,30 +36,46 @@ export default function Home(
 ) {
   const { t } = useTranslation("main");
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item>
+    <CenteredBox
+      sx={{ flexGrow: 1 }}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Stack spacing={10} direction={{ xs: "column", md: "row" }}>
+        <CenteredBox>
           <Image
             src="/images/dragon_small.png"
             alt={"Krakowski Klub Go"}
             width={300}
             height={269}
+            style={{
+              filter: "drop-shadow(0px 0px 20px #AAAAFF)",
+            }}
           />
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Typography>{t("tournament")}</Typography>
-            {data.tournaments.map((tournament: TournamentListSchema) => (
-              <TournamentCard tournament={tournament} key={tournament.id} />
-            ))}
+        </CenteredBox>
+        <CenteredBox>
+          <Stack direction={"column"} spacing={1}>
+            <Paper elevation={3}>
+              <Typography variant={"h4"} padding={"1rem"}>
+                {t("tournament")}
+              </Typography>
+              {data.tournaments.map((tournament: TournamentListSchema) => (
+                <TournamentCard tournament={tournament} key={tournament.id} />
+              ))}
+            </Paper>
 
-            <Typography>{t("meeting")}</Typography>
-            {data.meetings.map((meeting: MeetingListSchema) => (
-              <MeetingCard meeting={meeting} key={meeting.id} />
-            ))}
-          </Grid>
-        </Grid>
-      </Grid>
-    </Box>
+            <Paper elevation={3}>
+              <Typography variant={"h4"} padding={"1rem"}>
+                {t("meeting")}
+              </Typography>
+              {data.meetings.map((meeting: MeetingListSchema) => (
+                <MeetingCard meeting={meeting} key={meeting.id} />
+              ))}
+            </Paper>
+          </Stack>
+        </CenteredBox>
+      </Stack>
+    </CenteredBox>
   );
 }

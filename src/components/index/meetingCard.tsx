@@ -32,8 +32,8 @@ const TournamentCard: React.FC<Props> = ({ meeting }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">
-          <Link href={`/meetings/${meeting.id}`}>Obczaj</Link>
+        <Button href={`/meetings/${meeting.id}`} variant="contained">
+          Szczegóły
         </Button>
       </CardActions>
     </Card>

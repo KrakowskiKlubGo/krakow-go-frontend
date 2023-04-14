@@ -5,12 +5,14 @@ export type TournamentListSchema = {
   end_date: string;
 };
 
+export type ScheduleActivitySchema = {
+  date: string;
+  time: string;
+  activity_name: string;
+};
+
 export type TournamentInfoSchema = {
-  name: string;
-  image: string;
   place: string;
-  start_date: string;
-  end_date: string;
   is_draft: boolean;
   is_ended: boolean;
   organizer: string;
@@ -28,6 +30,8 @@ export type TournamentInfoSchema = {
   rounds: number;
   handicap_rules: string;
   time_control: string;
+  scheduled_activities: ScheduleActivitySchema[];
+  contact: string;
 };
 
 export type RegistrationInfoSchema = {
@@ -49,6 +53,10 @@ export type RegisteredPlayersSchema = {
 };
 
 export type TournamentDetailSchema = {
+  name: string;
+  image: string;
+  start_date: string;
+  end_date: string;
   tournament_info: TournamentInfoSchema;
   registration_info: RegistrationInfoSchema;
   registered_players: RegisteredPlayersSchema[];
