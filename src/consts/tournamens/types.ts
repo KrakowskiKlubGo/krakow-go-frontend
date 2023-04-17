@@ -34,6 +34,23 @@ export type TournamentInfoSchema = {
   contact: string;
 };
 
+export type TournamentInfoDetailListFields = Pick<
+  TournamentInfoSchema,
+  | "organizer"
+  | "referee"
+  | "additional_info"
+  | "prizes"
+  | "fee"
+  | "game_rules"
+  | "komi"
+  | "rules_system"
+  | "tournament_class"
+  | "rounds"
+  | "handicap_rules"
+  | "time_control"
+  | "contact"
+>;
+
 export type RegistrationInfoSchema = {
   tournament_id: number;
   end_date: string;
@@ -69,6 +86,15 @@ export type PlayerRegistrationFormSchema = {
   city_club: string;
   country: string;
   egf_pid: string;
+  captcha_key: string | null;
+  captcha_value: string;
+};
+
+export type CaptchaSchema = {
+  captcha_key: string;
+  captcha_image: string;
+  image_type: string;
+  image_decode: string;
 };
 
 export const ranks = [

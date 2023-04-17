@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Box from "@mui/material/Box";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Typography from "@mui/material/Typography";
@@ -11,7 +10,6 @@ import Meeting2 from "public/images/meeting2.jpg";
 import Meeting3 from "public/images/meeting3.jpg";
 import Meeting4 from "public/images/meeting4.jpg";
 import Meeting5 from "public/images/meeting5.jpg";
-import CssBaseline from "@mui/material/CssBaseline";
 import { ImageSection } from "@/components/about/ImageSection";
 
 export const getStaticProps: GetStaticProps = async (context) => {

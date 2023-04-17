@@ -8,3 +8,5 @@ export const tournamentRegistrationUrl = (id: number) =>
   `${apiBaseUrl}/tournaments/${id}/register-player/`;
 export const meetingsListUrl = `${apiBaseUrl}/meetings/`;
 export const meetingDetailUrl = (id: string) => `${apiBaseUrl}/meetings/${id}/`;
+
+export const captchaUrl = `${apiBaseUrl}/captcha/`;

@@ -1,4 +1,5 @@
 import {
+  captchaUrl,
   meetingDetailUrl,
   meetingsListUrl,
   tournamentDetailUrl,
@@ -37,7 +38,7 @@ export const postDataToBackend = async (api_url: string, data: any) => {
     });
     const result = await response.json();
 
-    if (response.status === 201) {
+    if (response.status === 200 || response.status === 201) {
       return result.message;
     } else {
       return result.non_field_errors[0];

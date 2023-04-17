@@ -8,7 +8,7 @@ interface Props {
   registration_info: RegistrationInfoSchema;
 }
 
-const AddAdvertiserFormFields: React.FC<Props> = ({ registration_info }) => {
+const AddPlayerFormFields: React.FC<Props> = ({ registration_info }) => {
   const { t } = useTranslation("registration");
   return (
     <>
@@ -52,4 +52,4 @@ const AddAdvertiserFormFields: React.FC<Props> = ({ registration_info }) => {
   );
 };
 
-export default AddAdvertiserFormFields;
+export default AddPlayerFormFields;
