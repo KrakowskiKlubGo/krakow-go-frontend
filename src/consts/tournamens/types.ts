@@ -69,6 +69,13 @@ export type RegisteredPlayersSchema = {
   egf_pid: string;
 };
 
+export type TournamentResultSchema = {
+  name: string;
+  type: string;
+  result_file: string;
+  timestamp: string;
+};
+
 export type TournamentDetailSchema = {
   name: string;
   image: string;
@@ -77,6 +84,7 @@ export type TournamentDetailSchema = {
   tournament_info: TournamentInfoSchema;
   registration_info: RegistrationInfoSchema;
   registered_players: RegisteredPlayersSchema[];
+  tournament_results: TournamentResultSchema[];
 };
 
 export type PlayerRegistrationFormSchema = {

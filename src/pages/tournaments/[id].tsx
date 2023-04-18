@@ -18,6 +18,7 @@ import CenteredBox from "@/components/common/CenteredBox";
 import { serverUrl } from "@/consts/api/urls";
 import Image from "next/image";
 import { MeetingListSchema } from "@/consts/meetings/types";
+import TournamentResultsPanel from "@/components/tournaments/TournamentResultsPanel";
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const tournaments: TournamentListSchema[] = await getTournamentsList("pl");
@@ -135,6 +136,7 @@ export default function TournamentDetail(
               <Tab label={t("info_tab")} {...a11yProps(0)} />
               <Tab label={t("registration_tab")} {...a11yProps(1)} />
               <Tab label={t("registered_players_tab")} {...a11yProps(2)} />
+              <Tab label="Results" {...a11yProps(2)} />
             </Tabs>
           </CenteredBox>
           <TabPanel value={value} index={0}>
@@ -151,6 +153,11 @@ export default function TournamentDetail(
             <RegisteredPlayersPanel
               registered_players={data.tournament.registered_players}
               registration_info={data.tournament.registration_info}
+            />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <TournamentResultsPanel
+              results={data.tournament.tournament_results}
             />
           </TabPanel>
         </Paper>
