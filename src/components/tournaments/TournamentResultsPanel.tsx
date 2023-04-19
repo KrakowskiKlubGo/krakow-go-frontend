@@ -1,35 +1,24 @@
-import {
-  CaptchaSchema,
-  RegisteredPlayersSchema,
-  RegistrationInfoSchema,
-  TournamentResultSchema,
-} from "@/consts/tournamens/types";
+import { TournamentResultSchema } from "@/consts/tournamens/types";
 import * as React from "react";
-import { useTranslation } from "next-i18next";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Box,
+  Paper,
+  TableContainer,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import PlayersTable from "@/components/tournaments/PlayersTable";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useSWR from "swr";
 import parse from "html-react-parser";
+import ResultTable from "./ResultTable";
 
 interface Props {
   results: TournamentResultSchema[];
 }
 
-const fileFetcher = (url: string) =>
-  fetch(url, {
-    method: "GET",
-  }).then((res) => res.text());
-
 const TournamentResultsPanel: React.FC<Props> = ({ results }) => {
-  const { data } = useSWR(results[0].result_file, fileFetcher);
-  console.log(data);
   return (
     <>
       <Box sx={{ m: 1, p: 1 }}>
@@ -37,12 +26,14 @@ const TournamentResultsPanel: React.FC<Props> = ({ results }) => {
           <Accordion key={index}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
+              aria-controls="panel-content"
+              id="panel-header"
             >
               <Typography>{result.name}</Typography>
             </AccordionSummary>
-            <AccordionDetails>{data && parse(data)}</AccordionDetails>
+            <TableContainer component={Paper}>
+              <ResultTable result={result} />
+            </TableContainer>
           </Accordion>
         ))}
       </Box>

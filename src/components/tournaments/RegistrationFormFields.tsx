@@ -14,13 +14,13 @@ const AddPlayerFormFields: React.FC<Props> = ({ registration_info }) => {
     <>
       <TextField
         required
-        id="first_name"
+        id="last_name"
         label={t("last_name")}
         defaultValue=""
       />
       <TextField
         required
-        id="last_name"
+        id="first_name"
         label={t("first_name")}
         defaultValue=""
       />

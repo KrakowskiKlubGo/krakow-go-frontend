@@ -24,7 +24,6 @@ import CenteredBox from "@/components/common/CenteredBox";
 import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { captchaUrl } from "@/consts/api/urls";
-import Image from "next/image";
 import { CaptchaImage } from "@/components/common/CaptchaImage";
 interface Props {
   registration_info: RegistrationInfoSchema;

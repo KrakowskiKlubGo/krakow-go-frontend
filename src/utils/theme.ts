@@ -11,7 +11,7 @@ export const theme = createTheme({
     },
   },
   palette: {
-    mode: "dark",
+    mode: "light",
   },
   components: {
     MuiLink: {
