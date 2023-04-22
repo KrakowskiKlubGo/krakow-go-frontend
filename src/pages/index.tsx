@@ -12,9 +12,8 @@ import MeetingCard from "@/components/index/meetingCard";
 import { getMeetingsList, getTournamentsList } from "@/api/api_methods";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import { Container, Paper, Stack } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 import CenteredBox from "@/components/common/CenteredBox";
-import { padding } from "@mui/system";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const tournaments: TournamentListSchema[] = await getTournamentsList(

@@ -1,5 +1,8 @@
 import * as React from "react";
-import { TournamentResultSchema } from "@/consts/tournamens/types";
+import {
+  TournamentResultSchema,
+  TournamentResultType,
+} from "@/consts/tournamens/types";
 import useSWR from "swr";
 import {
   Table,
@@ -8,10 +11,12 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import dynamic from "next/dynamic";
+import { useEffect } from "react";
+import GoResultsHighlighter from "@/utils/go_results_highlighter/lib/wrapper";
 
 interface Props {
   result: TournamentResultSchema;
+  id: string;
 }
 
 const fileFetcher = (url: string) =>
@@ -19,7 +24,14 @@ const fileFetcher = (url: string) =>
     method: "GET",
   }).then((res) => res.text());
 
-const ResultTable: React.FC<Props> = ({ result }) => {
+const ResultTable: React.FC<Props> = ({ result, id }) => {
+  useEffect(() => {
+    if (result.type == TournamentResultType.standings) {
+      const results_table = document.getElementById(id);
+      if (results_table) new GoResultsHighlighter(results_table);
+    }
+  });
+
   const { data } = useSWR(result.result_file, fileFetcher);
   if (data) {
     const parser = new DOMParser();
@@ -52,7 +64,7 @@ const ResultTable: React.FC<Props> = ({ result }) => {
           sx={{ minWidth: 500 }}
           aria-label="simple table"
           data-go-results
-          id="go-results"
+          id={id}
           size="small"
         >
           <TableHead>

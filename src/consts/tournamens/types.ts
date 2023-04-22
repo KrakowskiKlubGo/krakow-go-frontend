@@ -69,9 +69,15 @@ export type RegisteredPlayersSchema = {
   egf_pid: string;
 };
 
+export enum TournamentResultType {
+  game_list = "game_list",
+  players_list = "players_list",
+  standings = "standings",
+}
+
 export type TournamentResultSchema = {
   name: string;
-  type: string;
+  type: TournamentResultType;
   result_file: string;
   timestamp: string;
 };
@@ -103,6 +109,24 @@ export type CaptchaSchema = {
   captcha_image: string;
   image_type: string;
   image_decode: string;
+};
+
+export type EgdPlayerDataSchema = {
+  Pin_Player: string;
+  Last_Name: string;
+  Name: string;
+  Country_Code: string;
+  Club: string;
+  Grade: string;
+};
+
+export type EgdGetPlayerDataByDataSchema = {
+  retcode: string;
+  players: EgdPlayerDataSchema[];
+};
+
+export type EgdGetPlayerDataByPinSchema = EgdPlayerDataSchema & {
+  retcode: string;
 };
 
 export const ranks = [

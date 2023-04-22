@@ -10,3 +10,9 @@ export const meetingsListUrl = `${apiBaseUrl}/meetings/`;
 export const meetingDetailUrl = (id: string) => `${apiBaseUrl}/meetings/${id}/`;
 
 export const captchaUrl = `${apiBaseUrl}/captcha/`;
+
+export const EgdGetPlayerDataByPinUrl = (pin: string) =>
+  `https://www.europeangodatabase.eu/EGD/GetPlayerDataByPIN.php?pin=${pin}`;
+
+export const EgdGetPlayerDataByDataUrl = (last_name: string) =>
+  `https://www.europeangodatabase.eu/EGD/GetPlayerDataByData.php?lastname=${last_name}`;

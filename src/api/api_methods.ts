@@ -1,11 +1,17 @@
 import {
   captchaUrl,
+  EgdGetPlayerDataByDataUrl,
+  EgdGetPlayerDataByPinUrl,
   meetingDetailUrl,
   meetingsListUrl,
   tournamentDetailUrl,
   tournamentRegistrationUrl,
   tournamentsListUrl,
 } from "@/consts/api/urls";
+import {
+  EgdGetPlayerDataByDataSchema,
+  EgdPlayerDataSchema,
+} from "@/consts/tournamens/types";
 
 export const getDataFromBackend = async (api_url: string, locale: string) => {
   try {
@@ -67,4 +73,44 @@ export const GetTournamentDetails = (id: string, locale: string) => {
 
 export const registerPlayer = async (id: number, data: any) => {
   return postDataToBackend(tournamentRegistrationUrl(id), data);
+};
+
+export const captchaFetcher = (url: string) =>
+  fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: null,
+  }).then((res) => res.json());
+
+export const EgdGetPlayerDataByPinFetcher = (pin: string) =>
+  fetch(EgdGetPlayerDataByPinUrl(pin), {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  }).then((res) => res.json());
+
+export const EgdGetPlayerDataByData = async (last_name: string) => {
+  try {
+    const response = await fetch(EgdGetPlayerDataByDataUrl(last_name), {
+      method: "GET",
+    });
+
+    if (response.status === 200) {
+      const { data } = await response.json();
+      if (data?.retcode == "Ok") {
+        console.log(data?.players);
+        return data?.players as EgdPlayerDataSchema[];
+      } else {
+        return [];
+      }
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };

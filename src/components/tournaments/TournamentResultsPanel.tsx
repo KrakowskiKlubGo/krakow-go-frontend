@@ -2,7 +2,6 @@ import { TournamentResultSchema } from "@/consts/tournamens/types";
 import * as React from "react";
 import {
   Accordion,
-  AccordionDetails,
   AccordionSummary,
   Box,
   Paper,
@@ -10,8 +9,6 @@ import {
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import useSWR from "swr";
-import parse from "html-react-parser";
 import ResultTable from "./ResultTable";
 
 interface Props {
@@ -23,7 +20,7 @@ const TournamentResultsPanel: React.FC<Props> = ({ results }) => {
     <>
       <Box sx={{ m: 1, p: 1 }}>
         {results.map((result, index) => (
-          <Accordion key={index}>
+          <Accordion key={index} defaultExpanded={index === 0}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel-content"
@@ -32,7 +29,7 @@ const TournamentResultsPanel: React.FC<Props> = ({ results }) => {
               <Typography>{result.name}</Typography>
             </AccordionSummary>
             <TableContainer component={Paper}>
-              <ResultTable result={result} />
+              <ResultTable result={result} id={"go-result-" + index} />
             </TableContainer>
           </Accordion>
         ))}

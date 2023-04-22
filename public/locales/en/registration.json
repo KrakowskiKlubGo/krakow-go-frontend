@@ -6,6 +6,7 @@
   "club_city": "Club/City",
   "country": "Country",
   "register_button_text": "Register",
+  "register_success_back_button_text": "Powrót",
   "order": "No.",
   "registration_limit_info": "",
   "registered_players_list": "Registered players list:",

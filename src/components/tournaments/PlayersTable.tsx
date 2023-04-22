@@ -1,15 +1,5 @@
 import * as React from "react";
 import { RegisteredPlayersSchema } from "@/consts/tournamens/types";
-import {
-  Container,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
 import { useTranslation } from "next-i18next";
 import { DataGrid, GridComparatorFn } from "@mui/x-data-grid";
 
@@ -94,42 +84,8 @@ const PlayersTable: React.FC<Props> = ({ players }) => {
     country: player.country,
     city_club: player.city_club,
   }));
-  console.log(rows);
-  console.log(columns);
 
   return (
-    // <TableContainer component={Paper}>
-    //   <Table sx={{ minWidth: 300 }}>
-    //     <TableHead>
-    //       <TableRow>
-    //         <TableCell>{t("order")}</TableCell>
-    //         <TableCell>{t("name")}</TableCell>
-    //         <TableCell>{t("rank")}</TableCell>
-    //         <TableCell>{t("country")}</TableCell>
-    //         <TableCell>{t("club_city")}</TableCell>
-    //       </TableRow>
-    //     </TableHead>
-    //     <TableBody>
-    //       {players.map((player, index) => (
-    //         <TableRow
-    //           key={index + 1}
-    //           sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-    //         >
-    //           <TableCell component="th" scope="row">
-    //             {index + 1}
-    //           </TableCell>
-    //           <TableCell>
-    //             {player.first_name} {player.last_name}
-    //           </TableCell>
-    //           <TableCell>{player.rank}</TableCell>
-    //           <TableCell>{player.country}</TableCell>
-    //           <TableCell>{player.city_club}</TableCell>
-    //         </TableRow>
-    //       ))}
-    //     </TableBody>
-    //   </Table>
-    // </TableContainer>
-
     <DataGrid
       autoHeight={true}
       columns={columns}

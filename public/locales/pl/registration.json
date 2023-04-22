@@ -7,6 +7,7 @@
   "country": "Kraj",
   "order": "No.",
   "register_button_text": "Zarejestruj",
+  "register_success_back_button_text": "Powrót",
   "registration_limit_info": "",
   "registered_players_list": "Lista zarejestrowanych graczy:",
   "waiting_list": "Lista rezerwowa"

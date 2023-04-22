@@ -1,6 +1,5 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import AddPlayerFormFields from "./RegistrationFormFields";
 import {
   Backdrop,
   CircularProgress,
@@ -17,32 +16,34 @@ import {
 import {
   CaptchaSchema,
   PlayerRegistrationFormSchema,
+  ranks,
   RegistrationInfoSchema,
 } from "@/consts/tournamens/types";
-import { registerPlayer } from "@/api/api_methods";
+import { captchaFetcher, registerPlayer } from "@/api/api_methods";
 import CenteredBox from "@/components/common/CenteredBox";
 import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { captchaUrl } from "@/consts/api/urls";
 import { CaptchaImage } from "@/components/common/CaptchaImage";
+import { useTranslation } from "next-i18next";
+import EgdLastNameAutocomplete from "@/components/tournaments/EgdLastNameAutocomplete";
 interface Props {
   registration_info: RegistrationInfoSchema;
 }
-
-const captchaFetcher = (url: string) =>
-  fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: null,
-  }).then((res) => res.json());
 
 const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
   const [response, setResponse] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const [firstNameText, setFirstNameText] = useState("");
+  const [rankText, setRankText] = useState("1k");
+  const [cityClubText, setCityClubText] = useState("");
+  const [countryText, setCountryText] = useState("");
+  const [egfPidText, setEgfPidText] = useState("");
+
   const { data } = useSWR<CaptchaSchema>(captchaUrl, captchaFetcher);
+  const { t } = useTranslation("registration");
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
     tournament_id: number
@@ -92,7 +93,42 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
           >
             <Container>
               <FormControl size="small">
-                <AddPlayerFormFields registration_info={registration_info} />
+                <EgdLastNameAutocomplete label={t("last_name")} />
+                <TextField
+                  required
+                  id="first_name"
+                  label={t("first_name")}
+                  defaultValue=""
+                />
+                <TextField
+                  required
+                  select
+                  id="rank"
+                  label={t("rank")}
+                  defaultValue="1k"
+                  SelectProps={{
+                    native: true,
+                  }}
+                >
+                  {ranks.map((rank) => (
+                    <option key={rank.value} value={rank.value}>
+                      {rank.label}
+                    </option>
+                  ))}
+                </TextField>
+                <TextField
+                  required
+                  id="city_club"
+                  label={t("club_city")}
+                  defaultValue=""
+                />
+                <TextField
+                  required
+                  id="country"
+                  label={t("country")}
+                  defaultValue=""
+                />
+                <TextField id="egf_pid" label="EGF PID" defaultValue="" />
 
                 {data?.captcha_image ? (
                   <CenteredBox>
@@ -111,7 +147,7 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
                 />
 
                 <Button type="submit" variant={"contained"}>
-                  Zarejestruj
+                  {t("register_button_text")}
                 </Button>
                 <Backdrop open={loading}>
                   <CircularProgress color="inherit" />

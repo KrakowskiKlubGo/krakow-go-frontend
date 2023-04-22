@@ -1,0 +1,54 @@
+.go-results- {
+    &rearranged {
+        color: #dddddd;
+        cursor: pointer;
+    }
+
+    &current {
+        background-color: #d2d2d2;
+        color: #000000;
+        cursor: pointer;
+    }
+
+    &current &game {
+        background-color: #a7a7a7;
+    }
+
+    &won {
+        background-color: #799B29;
+        color: #000000;
+    }
+
+    &won &game {
+        background-color: #5A6A2C;
+        color: #ffffff;
+    }
+
+    &lost {
+        background-color: #D97962;
+        color: #000000;
+    }
+
+    &lost &game {
+        background-color: #A5422B;
+        color: #ffffff;
+    }
+
+    &jigo {
+        background-color: #D7C3D1;
+        color: #000000;
+    }
+
+    &jigo &game {
+        background-color: #9E7593;
+    }
+
+    &unresolved {
+        background-color: #CBDCE5;
+        color: #000000;
+    }
+
+    &unresolved &game {
+        background-color: #7D9CAD;
+    }
+}
