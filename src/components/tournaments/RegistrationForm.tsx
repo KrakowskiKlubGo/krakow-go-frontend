@@ -93,12 +93,22 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
           >
             <Container>
               <FormControl size="small">
-                <EgdLastNameAutocomplete label={t("last_name")} />
+                <EgdLastNameAutocomplete
+                  label={t("last_name")}
+                  id={"last_name"}
+                  setFirstName={setFirstNameText}
+                  setRank={setRankText}
+                  setCityClub={setCityClubText}
+                  setCountry={setCountryText}
+                  setEgdPid={setEgfPidText}
+                />
                 <TextField
                   required
                   id="first_name"
                   label={t("first_name")}
                   defaultValue=""
+                  value={firstNameText}
+                  onChange={(event) => setFirstNameText(event.target.value)}
                 />
                 <TextField
                   required
@@ -106,6 +116,8 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
                   id="rank"
                   label={t("rank")}
                   defaultValue="1k"
+                  value={rankText}
+                  onChange={(event) => setRankText(event.target.value)}
                   SelectProps={{
                     native: true,
                   }}
@@ -121,14 +133,24 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
                   id="city_club"
                   label={t("club_city")}
                   defaultValue=""
+                  value={cityClubText}
+                  onChange={(event) => setCityClubText(event.target.value)}
                 />
                 <TextField
                   required
                   id="country"
                   label={t("country")}
                   defaultValue=""
+                  value={countryText}
+                  onChange={(event) => setCountryText(event.target.value)}
                 />
-                <TextField id="egf_pid" label="EGF PID" defaultValue="" />
+                <TextField
+                  id="egf_pid"
+                  label="EGF PID"
+                  defaultValue=""
+                  value={egfPidText}
+                  onChange={(event) => setEgfPidText(event.target.value)}
+                />
 
                 {data?.captcha_image ? (
                   <CenteredBox>

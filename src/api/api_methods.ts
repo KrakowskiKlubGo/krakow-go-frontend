@@ -84,14 +84,6 @@ export const captchaFetcher = (url: string) =>
     body: null,
   }).then((res) => res.json());
 
-export const EgdGetPlayerDataByPinFetcher = (pin: string) =>
-  fetch(EgdGetPlayerDataByPinUrl(pin), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "GET",
-  }).then((res) => res.json());
-
 export const EgdGetPlayerDataByData = async (last_name: string) => {
   try {
     const response = await fetch(EgdGetPlayerDataByDataUrl(last_name), {
@@ -100,8 +92,9 @@ export const EgdGetPlayerDataByData = async (last_name: string) => {
 
     if (response.status === 200) {
       const { data } = await response.json();
+      console.log(data);
       if (data?.retcode == "Ok") {
-        console.log(data?.players);
+        console.log("api players: " + data?.players);
         return data?.players as EgdPlayerDataSchema[];
       } else {
         return [];
