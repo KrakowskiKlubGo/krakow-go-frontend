@@ -11,7 +11,7 @@ import {
   TournamentListSchema,
 } from "@/consts/tournamens/types";
 import { GetTournamentDetails, getAllTournamentsList } from "@/api/api_methods";
-import { detailPageParams } from "@/consts/interfaces";
+import { detailTournamentPageParams } from "@/consts/interfaces";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import CenteredBox from "@/components/common/CenteredBox";
@@ -39,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { code } = context.params as detailPageParams;
+  const { code } = context.params as detailTournamentPageParams;
 
   const tournament: TournamentDetailSchema[] = await GetTournamentDetails(
     code,

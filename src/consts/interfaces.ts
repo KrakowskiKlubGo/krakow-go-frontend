@@ -1,7 +1,11 @@
 import { ParsedUrlQuery } from "querystring";
 
-export interface detailPageParams extends ParsedUrlQuery {
+export interface detailTournamentPageParams extends ParsedUrlQuery {
   code: string;
+}
+
+export interface detailMeetingPageParams extends ParsedUrlQuery {
+  id: string;
 }
 
 export interface StaticImageData {

@@ -10,7 +10,10 @@ import {
 } from "@/consts/meetings/types";
 import { getMeetingDetails, getMeetingsList } from "@/api/api_methods";
 import { ParsedUrlQuery } from "querystring";
-import { detailPageParams } from "@/consts/interfaces";
+import {
+  detailMeetingPageParams,
+  detailTournamentPageParams,
+} from "@/consts/interfaces";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export const getStaticPaths = async () => {
@@ -30,7 +33,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { id } = context.params as detailPageParams;
+  const { id } = context.params as detailMeetingPageParams;
   const meeting: MeetingDetailSchema = await getMeetingDetails(
     id,
     context.locale ?? "pl"
