@@ -2,6 +2,7 @@ import {
   captchaUrl,
   EgdGetPlayerDataByDataUrl,
   EgdGetPlayerDataByPinUrl,
+  IncomingTournamentsListUrl,
   meetingDetailUrl,
   meetingsListUrl,
   tournamentDetailUrl,
@@ -63,12 +64,16 @@ export const getMeetingDetails = async (id: string, locale: string) => {
   return getDataFromBackend(meetingDetailUrl(id), locale);
 };
 
-export const getTournamentsList = async (locale: string) => {
+export const getAllTournamentsList = async (locale: string) => {
   return getDataFromBackend(tournamentsListUrl, locale);
 };
 
-export const GetTournamentDetails = (id: string, locale: string) => {
-  return getDataFromBackend(tournamentDetailUrl(id), locale);
+export const getIncomingTournamentsList = async (locale: string) => {
+  return getDataFromBackend(IncomingTournamentsListUrl, locale);
+};
+
+export const GetTournamentDetails = (code: string, locale: string) => {
+  return getDataFromBackend(tournamentDetailUrl(code), locale);
 };
 
 export const registerPlayer = async (id: number, data: any) => {

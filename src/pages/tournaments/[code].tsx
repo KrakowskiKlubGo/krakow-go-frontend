@@ -10,22 +10,23 @@ import {
   TournamentDetailSchema,
   TournamentListSchema,
 } from "@/consts/tournamens/types";
-import { GetTournamentDetails, getTournamentsList } from "@/api/api_methods";
+import { GetTournamentDetails, getAllTournamentsList } from "@/api/api_methods";
 import { detailPageParams } from "@/consts/interfaces";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import CenteredBox from "@/components/common/CenteredBox";
 import Image from "next/image";
 import TournamentResultsPanel from "@/components/tournaments/TournamentResultsPanel";
+import { getTournamentDateString } from "@/utils/functions";
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  const tournaments: TournamentListSchema[] = await getTournamentsList("pl");
+  const tournaments: TournamentListSchema[] = await getAllTournamentsList("pl");
   const validLocales = locales && Array.isArray(locales) ? locales : [];
 
   const paths = tournaments.flatMap((tournament) => {
     return validLocales.map((locale) => {
       return {
-        params: { id: tournament.id.toString() },
+        params: { code: tournament.code },
         locale: locale,
       };
     });
@@ -38,10 +39,10 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { id } = context.params as detailPageParams;
+  const { code } = context.params as detailPageParams;
 
   const tournament: TournamentDetailSchema[] = await GetTournamentDetails(
-    id,
+    code,
     context.locale ?? "pl"
   );
 
@@ -115,10 +116,7 @@ export default function TournamentDetail(
             <Box>
               <Typography variant={"h2"}>{data.tournament.name}</Typography>
               <Typography variant={"h4"}>
-                {data.tournament.start_date}
-                {data.tournament.end_date !== null && (
-                  <span> - {data.tournament.end_date}</span>
-                )}
+                {getTournamentDateString(data.tournament)}
               </Typography>
             </Box>
           </Stack>

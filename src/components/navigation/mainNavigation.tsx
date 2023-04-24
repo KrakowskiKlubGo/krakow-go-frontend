@@ -42,6 +42,19 @@ export default function MainAppBar(props: Props) {
     setMobileOpen((prevState) => !prevState);
   };
 
+  type MenuLink = {
+    href: string;
+    label: string;
+  };
+
+  const links: MenuLink[] = [
+    { href: "/", label: t("home") },
+    { href: "/about", label: t("about") },
+    { href: "/tournaments", label: t("tournaments") },
+    { href: "/learn", label: t("learn") },
+    { href: "/contact", label: t("contact") },
+  ];
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -49,13 +62,13 @@ export default function MainAppBar(props: Props) {
       </Typography>
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton sx={{ textAlign: "center" }}>
-            <Link href="/" color="#FFFFFF">
-              <ListItemText secondary="Start" />
-            </Link>
-          </ListItemButton>
-        </ListItem>
+        {links.map(({ href, label }, index) => (
+          <ListItem key={index}>
+            <ListItemButton href={href}>
+              <ListItemText secondary={label} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
@@ -73,24 +86,26 @@ export default function MainAppBar(props: Props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "block" } }}
           >
             {t("title")}
           </Typography>
+          <Box sx={{ display: { xs: "none", sm: "block" }, margin: "auto" }}>
+            {links.map(({ href, label }, index) => (
+              <Button key={index}>
+                <Link href={href}>{label}</Link>
+              </Button>
+            ))}
+          </Box>
+
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Button>
-              <Link href={"/"}>Start</Link>
-            </Button>
-            <Button>
-              <Link href={"/about"}>O nas</Link>
-            </Button>
             <Button>
               <Link
                 href={router.asPath}

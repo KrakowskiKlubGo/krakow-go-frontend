@@ -1,3 +1,8 @@
 {
-  "title": "Krakow Go Club"
+  "title": "Krakow Go Club",
+  "home": "Home",
+  "about": "About",
+  "tournaments": "Tournaments",
+  "learn": "Learn",
+  "contact": "Contact"
 }

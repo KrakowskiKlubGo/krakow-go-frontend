@@ -4,7 +4,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { TournamentListSchema } from "../../consts/tournamens/types";
+import { getTournamentDateString } from "@/utils/functions";
+import { TournamentListSchema } from "@/consts/tournamens/types";
 
 interface Props {
   tournament: TournamentListSchema;
@@ -19,14 +20,11 @@ const TournamentCard: React.FC<Props> = ({ tournament }) => {
         </Typography>
         <Typography variant="h5"></Typography>
         <Typography variant="body2">
-          {tournament.start_date}
-          {tournament.end_date !== null && (
-            <span> - {tournament.end_date}</span>
-          )}
+          {getTournamentDateString(tournament)}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" href={`/tournaments/${tournament.id}`}>
+        <Button variant="contained" href={`/tournaments/${tournament.code}`}>
           Szczegóły
         </Button>
       </CardActions>

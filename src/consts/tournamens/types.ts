@@ -1,5 +1,5 @@
 export type TournamentListSchema = {
-  id: number;
+  code: string;
   name: string;
   start_date: string;
   end_date: string;

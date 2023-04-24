@@ -1,7 +1,7 @@
 import { ParsedUrlQuery } from "querystring";
 
 export interface detailPageParams extends ParsedUrlQuery {
-  id: string;
+  code: string;
 }
 
 export interface StaticImageData {
