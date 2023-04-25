@@ -1,4 +1,20 @@
 {
   "tournament": "Najbliższy turniej",
-  "meeting": "Najbliższe spotkanie"
+  "meeting": "Najbliższe spotkanie",
+  "main_header": "Witaj na naszej stronie!",
+  "text_1": "Jesteśmy grupą osób lubiących grać w prostą i ciekawą gre o nazwie Go",
+  "text_2": "Wspólnie od lat jako Krakowski Klub Go organizujemy spotkania, na których można pograć w Go w przyjaznej atmosferze.",
+  "map_header": "Spotkania",
+  "map_description": "Spotkania odbywają się w środy od godziny 18:00 w lokalu Artefakt Cafe",
+  "map_address_1": "ul. Dajwór 3,",
+  "map_address_2": "31-052 Kraków",
+  "section_1_header": "Artefakt cafe",
+  "section_1_text": "Spotykamy się w świetnym miejscu, w którym można napić się dobrego piwa i nie tylko. Z tyłu lokalu znajduje się ogródek, w którym zwykle przesiadujemy w lecie.",
+  "section_2_header": "Klubowicze",
+  "section_2_text": "Nasi Klubowicze prezentują szeroki zakres zaawansowania - od początkujących graczy DDK, po znanych na arenie międzynarodowej danowców takich jak Koichiro Habu 5 dan!",
+  "section_3_header": "Zapraszamy początkujących",
+  "section_3_text": "Nie musisz umieć grać w Go aby do nas dołączyć. Wystarczą tylko chęci i ciekawość, a wszystkiego Cię nauczymy.",
+  "section_4_header": "Organizujemy turnieje!",
+  "section_4_text": "Krakowskie turnieje to doskonała okazja aby spotkać graczy go z całej Polski oraz zawalczyć o punkty rankingowe i nagrody.",
+  "contact": "W razie wątpliwości napisz do nas!"
 }

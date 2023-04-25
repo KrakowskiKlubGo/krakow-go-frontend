@@ -2,7 +2,8 @@ export const serverUrl = "http://127.0.0.1:8000";
 export const apiBaseUrl = "http://127.0.0.1:8000/api";
 
 export const tournamentsListUrl = `${apiBaseUrl}/tournaments/`;
-export const IncomingTournamentsListUrl = `${apiBaseUrl}/tournaments/?is_ended=false`;
+export const IncomingTournamentsListUrl = `${apiBaseUrl}/tournaments/?is_ended=false&is_draft=false`;
+export const EndedTournamentsListUrl = `${apiBaseUrl}/tournaments/?is_ended=true&is_draft=false`;
 export const tournamentDetailUrl = (code: string) =>
   `${apiBaseUrl}/tournaments/${code}/`;
 export const tournamentRegistrationUrl = (id: number) =>

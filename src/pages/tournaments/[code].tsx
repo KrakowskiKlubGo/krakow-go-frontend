@@ -17,7 +17,8 @@ import { useTranslation } from "next-i18next";
 import CenteredBox from "@/components/common/CenteredBox";
 import Image from "next/image";
 import TournamentResultsPanel from "@/components/tournaments/TournamentResultsPanel";
-import { getTournamentDateString } from "@/utils/functions";
+import { getLocalizedDateString } from "@/utils/functions";
+import { width } from "@mui/system";
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const tournaments: TournamentListSchema[] = await getAllTournamentsList("pl");
@@ -91,10 +92,15 @@ export default function TournamentDetail(
   data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const [value, setValue] = React.useState(0);
+  const registration_enable =
+    data.tournament.registration_info.end_date > new Date();
+  const registered_players_enable =
+    data.tournament.registered_players.length > 0;
+  const results_enable = data.tournament.tournament_results.length > 0;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  const { t } = useTranslation(["tournaments", "registration"]);
+  const { t, i18n } = useTranslation(["tournaments", "registration"]);
   return (
     <>
       <Container>
@@ -102,7 +108,7 @@ export default function TournamentDetail(
           <Stack
             spacing={10}
             direction={{ xs: "column", md: "row" }}
-            sx={{ m: 3, p: 3 }}
+            sx={{ m: 1, p: 3 }}
           >
             <Box>
               <Image
@@ -116,7 +122,11 @@ export default function TournamentDetail(
             <Box>
               <Typography variant={"h2"}>{data.tournament.name}</Typography>
               <Typography variant={"h4"}>
-                {getTournamentDateString(data.tournament)}
+                {getLocalizedDateString(
+                  i18n.language,
+                  data.tournament.start_date,
+                  data.tournament.end_date
+                )}
               </Typography>
             </Box>
           </Stack>
@@ -130,32 +140,53 @@ export default function TournamentDetail(
               allowScrollButtonsMobile
             >
               <Tab label={t("info_tab")} {...a11yProps(0)} />
-              <Tab label={t("registration_tab")} {...a11yProps(1)} />
-              <Tab label={t("registered_players_tab")} {...a11yProps(2)} />
-              <Tab label="Results" {...a11yProps(2)} />
+              <Tab
+                label={t("registration_tab")}
+                {...a11yProps(1)}
+                disabled={!registration_enable}
+              />
+              <Tab
+                label={t("registered_players_tab")}
+                {...a11yProps(2)}
+                disabled={!registered_players_enable}
+              />
+              <Tab
+                label="Results"
+                {...a11yProps(2)}
+                disabled={!results_enable}
+              />
             </Tabs>
           </CenteredBox>
+
           <TabPanel value={value} index={0}>
             <TournamentInfoPanel
               tournament_info={data.tournament.tournament_info}
             />
           </TabPanel>
-          <TabPanel value={value} index={1}>
-            <RegistrationForm
-              registration_info={data.tournament.registration_info}
-            />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <RegisteredPlayersPanel
-              registered_players={data.tournament.registered_players}
-              registration_info={data.tournament.registration_info}
-            />
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            <TournamentResultsPanel
-              results={data.tournament.tournament_results}
-            />
-          </TabPanel>
+
+          {registration_enable && (
+            <TabPanel value={value} index={1}>
+              <RegistrationForm
+                registration_info={data.tournament.registration_info}
+              />
+            </TabPanel>
+          )}
+          {registered_players_enable && (
+            <TabPanel value={value} index={2}>
+              <RegisteredPlayersPanel
+                registered_players={data.tournament.registered_players}
+                registration_info={data.tournament.registration_info}
+              />
+            </TabPanel>
+          )}
+
+          {results_enable && (
+            <TabPanel value={value} index={3}>
+              <TournamentResultsPanel
+                results={data.tournament.tournament_results}
+              />
+            </TabPanel>
+          )}
         </Paper>
       </Container>
     </>

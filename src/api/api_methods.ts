@@ -2,6 +2,7 @@ import {
   captchaUrl,
   EgdGetPlayerDataByDataUrl,
   EgdGetPlayerDataByPinUrl,
+  EndedTournamentsListUrl,
   IncomingTournamentsListUrl,
   meetingDetailUrl,
   meetingsListUrl,
@@ -70,6 +71,10 @@ export const getAllTournamentsList = async (locale: string) => {
 
 export const getIncomingTournamentsList = async (locale: string) => {
   return getDataFromBackend(IncomingTournamentsListUrl, locale);
+};
+
+export const getEndedTournamentsList = async (locale: string) => {
+  return getDataFromBackend(EndedTournamentsListUrl, locale);
 };
 
 export const GetTournamentDetails = (code: string, locale: string) => {

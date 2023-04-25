@@ -18,5 +18,7 @@
   "fee": "Fee",
   "handicap_rules": "Handicap rules",
   "additional_info": "Additional info",
-  "contact": "Contact"
+  "contact": "Contact",
+  "incoming_tournaments_header": "Incoming tournaments",
+  "ended_tournaments_header": "Ended tournaments"
 }

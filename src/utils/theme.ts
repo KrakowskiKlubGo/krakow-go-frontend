@@ -17,7 +17,6 @@ export const theme = createTheme({
     MuiLink: {
       defaultProps: {
         underline: "none",
-        color: "#fff",
       },
     },
     MuiPaper: {

@@ -18,5 +18,7 @@
   "fee": "Wpisowe",
   "handicap_rules": "Zasady handicapu",
   "additional_info": "Dodatkowe informacje",
-  "contact": "Kontakt"
+  "contact": "Kontakt",
+  "incoming_tournaments_header": "Nadchodzące turnieje",
+  "ended_tournaments_header": "Zakończone turnieje"
 }

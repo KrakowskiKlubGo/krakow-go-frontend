@@ -7,12 +7,15 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { MeetingListSchema } from "@/consts/meetings/types";
 import { Link } from "@mui/material";
+import { useTranslation } from "next-i18next";
+import { getLocalizedDateString } from "@/utils/functions";
 
 interface Props {
   meeting: MeetingListSchema;
 }
 
-const TournamentCard: React.FC<Props> = ({ meeting }) => {
+const MeetingCard: React.FC<Props> = ({ meeting }) => {
+  const { i18n } = useTranslation("common");
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -23,10 +26,9 @@ const TournamentCard: React.FC<Props> = ({ meeting }) => {
           <span>{meeting.address}</span>
         </Typography>
         <Typography variant="body2" component="div">
-          {meeting.date}
+          {getLocalizedDateString(i18n.language, meeting.date)}
         </Typography>
         <Typography variant="body2">
-          Godzina:
           {meeting.start_time}
           {meeting.end_time !== null && <span> - {meeting.end_time}</span>}
         </Typography>
@@ -40,4 +42,4 @@ const TournamentCard: React.FC<Props> = ({ meeting }) => {
   );
 };
 
-export default TournamentCard;
+export default MeetingCard;
