@@ -4,7 +4,6 @@ import { useTranslation } from "next-i18next";
 import Typography from "@mui/material/Typography";
 import { Paper } from "@mui/material";
 import CenteredBox from "@/components/common/CenteredBox";
-import { padding } from "@mui/system";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {

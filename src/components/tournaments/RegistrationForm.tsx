@@ -27,6 +27,7 @@ import { captchaUrl } from "@/consts/api/urls";
 import { CaptchaImage } from "@/components/common/CaptchaImage";
 import { useTranslation } from "next-i18next";
 import EgdLastNameAutocomplete from "@/components/tournaments/EgdLastNameAutocomplete";
+import Typography from "@mui/material/Typography";
 interface Props {
   registration_info: RegistrationInfoSchema;
 }
@@ -43,10 +44,10 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
   const [egfPidText, setEgfPidText] = useState("");
 
   const { data } = useSWR<CaptchaSchema>(captchaUrl, captchaFetcher);
-  const { t } = useTranslation("registration");
+  const { t, i18n } = useTranslation("registration");
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
-    tournament_id: number
+    tournament_code: string
   ) => {
     event.preventDefault();
     setLoading(true);
@@ -64,7 +65,11 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
         captcha_value: target.captcha_value.value,
       };
 
-      const response_message = await registerPlayer(tournament_id, post_data);
+      const response_message = await registerPlayer(
+        tournament_code,
+        post_data,
+        i18n.language
+      );
       setMessage(response_message);
     } else {
       setMessage("Captcha not loaded");
@@ -88,86 +93,107 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
         <CenteredBox sx={{ m: 1, p: 2 }}>
           <form
             onSubmit={(event) =>
-              handleSubmit(event, registration_info.tournament_id)
+              handleSubmit(event, registration_info.tournament_code)
             }
           >
-            <Container>
+            {registration_info.description && (
+              <Typography>{registration_info.description}</Typography>
+            )}
+
+            <CenteredBox>
               <FormControl size="small">
-                <EgdLastNameAutocomplete
-                  label={t("last_name")}
-                  id={"last_name"}
-                  setFirstName={setFirstNameText}
-                  setRank={setRankText}
-                  setCityClub={setCityClubText}
-                  setCountry={setCountryText}
-                  setEgdPid={setEgfPidText}
-                />
-                <TextField
-                  required
-                  id="first_name"
-                  label={t("first_name")}
-                  defaultValue=""
-                  value={firstNameText}
-                  onChange={(event) => setFirstNameText(event.target.value)}
-                />
-                <TextField
-                  required
-                  select
-                  id="rank"
-                  label={t("rank")}
-                  defaultValue="1k"
-                  value={rankText}
-                  onChange={(event) => setRankText(event.target.value)}
-                  SelectProps={{
-                    native: true,
-                  }}
-                >
-                  {ranks.map((rank) => (
-                    <option key={rank.value} value={rank.value}>
-                      {rank.label}
-                    </option>
-                  ))}
-                </TextField>
-                <TextField
-                  required
-                  id="city_club"
-                  label={t("club_city")}
-                  defaultValue=""
-                  value={cityClubText}
-                  onChange={(event) => setCityClubText(event.target.value)}
-                />
-                <TextField
-                  required
-                  id="country"
-                  label={t("country")}
-                  defaultValue=""
-                  value={countryText}
-                  onChange={(event) => setCountryText(event.target.value)}
-                />
-                <TextField
-                  id="egf_pid"
-                  label="EGF PID"
-                  defaultValue=""
-                  value={egfPidText}
-                  onChange={(event) => setEgfPidText(event.target.value)}
-                />
+                <CenteredBox>
+                  <EgdLastNameAutocomplete
+                    label={t("last_name")}
+                    id={"last_name"}
+                    setFirstName={setFirstNameText}
+                    setRank={setRankText}
+                    setCityClub={setCityClubText}
+                    setCountry={setCountryText}
+                    setEgdPid={setEgfPidText}
+                  />
+                </CenteredBox>
+                <CenteredBox>
+                  <TextField
+                    required
+                    id="first_name"
+                    label={t("first_name")}
+                    defaultValue=""
+                    value={firstNameText}
+                    onChange={(event) => setFirstNameText(event.target.value)}
+                  />
+                </CenteredBox>
 
-                {data?.captcha_image ? (
-                  <CenteredBox>
-                    <CaptchaImage base64_image={data?.captcha_image} />
-                  </CenteredBox>
-                ) : (
-                  <CenteredBox>
-                    <CircularProgress color="inherit" />
-                  </CenteredBox>
-                )}
-                <TextField
-                  required
-                  id="captcha_value"
-                  label="Captcha"
-                  defaultValue=""
-                />
+                <CenteredBox>
+                  <TextField
+                    required
+                    select
+                    id="rank"
+                    label={t("rank")}
+                    defaultValue="1k"
+                    value={rankText}
+                    onChange={(event) => setRankText(event.target.value)}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {ranks.map((rank) => (
+                      <option key={rank.value} value={rank.value}>
+                        {rank.label}
+                      </option>
+                    ))}
+                  </TextField>
+                </CenteredBox>
+                <CenteredBox>
+                  <TextField
+                    required
+                    id="city_club"
+                    label={t("club_city")}
+                    defaultValue=""
+                    value={cityClubText}
+                    onChange={(event) => setCityClubText(event.target.value)}
+                  />
+                </CenteredBox>
+                <CenteredBox>
+                  <TextField
+                    required
+                    id="country"
+                    label={t("country")}
+                    defaultValue=""
+                    value={countryText}
+                    onChange={(event) => setCountryText(event.target.value)}
+                  />
+                </CenteredBox>
+                <CenteredBox>
+                  <TextField
+                    id="egf_pid"
+                    label="EGF PID"
+                    defaultValue=""
+                    value={egfPidText}
+                    onChange={(event) => setEgfPidText(event.target.value)}
+                  />{" "}
+                </CenteredBox>
 
+                <CenteredBox>
+                  <Stack direction={"row"} sx={{ padding: 2 }}>
+                    {data?.captcha_image ? (
+                      <CenteredBox>
+                        <CaptchaImage base64_image={data?.captcha_image} />
+                      </CenteredBox>
+                    ) : (
+                      <CenteredBox>
+                        <CircularProgress color="inherit" />
+                      </CenteredBox>
+                    )}
+                    <TextField
+                      required
+                      id="captcha_value"
+                      label="Captcha"
+                      defaultValue=""
+                      sx={{ maxWidth: "143px" }}
+                    />
+                  </Stack>
+                </CenteredBox>
                 <Button type="submit" variant={"contained"}>
                   {t("register_button_text")}
                 </Button>
@@ -184,7 +210,7 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
                   </DialogActions>
                 </Dialog>
               </FormControl>
-            </Container>
+            </CenteredBox>
           </form>
         </CenteredBox>
       </Paper>

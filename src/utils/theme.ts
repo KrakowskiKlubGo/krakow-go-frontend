@@ -11,7 +11,7 @@ export const theme = createTheme({
     },
   },
   palette: {
-    mode: "light",
+    mode: "dark",
   },
   components: {
     MuiLink: {
@@ -21,6 +21,14 @@ export const theme = createTheme({
     },
     MuiPaper: {
       defaultProps: {},
+    },
+    MuiContainer: {
+      defaultProps: {
+        sx: {
+          paddingX: 0,
+          paddingY: 2,
+        },
+      },
     },
   },
   typography: {

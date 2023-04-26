@@ -20,6 +20,7 @@ import Meeting2 from "../../public/images/meeting2.jpg";
 import Meeting3 from "../../public/images/meeting3.jpg";
 import Meeting4 from "../../public/images/meeting4.jpg";
 import Meeting5 from "../../public/images/meeting5.jpg";
+import GobanCut from "../../public/images/goban-cut.png";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const tournaments: TournamentListSchema[] = await getIncomingTournamentsList(
@@ -49,7 +50,7 @@ export default function Home(
         }}
       >
         <CenteredBox>
-          <Stack spacing={10} direction={{ xs: "column", md: "row" }}>
+          <Stack spacing={10} direction={"column"}>
             <CenteredBox>
               <Image
                 src="/images/dragon_small.png"
@@ -59,12 +60,14 @@ export default function Home(
               />
             </CenteredBox>
             <CenteredBox>
-              <Stack direction={"column"} spacing={1}>
+              <Stack direction={{ xs: "column", md: "row" }} spacing={5}>
                 {data.tournaments.length > 0 && (
-                  <Paper elevation={3}>
-                    <Typography variant={"h4"} padding={"1rem"}>
-                      {t("tournament")}
-                    </Typography>
+                  <Stack spacing={1}>
+                    <Paper elevation={2}>
+                      <Typography variant={"h5"} padding={"1rem"}>
+                        {t("tournament")}
+                      </Typography>
+                    </Paper>
                     {data.tournaments.map(
                       (tournament: TournamentListSchema) => (
                         <TournamentCard
@@ -73,23 +76,27 @@ export default function Home(
                         />
                       )
                     )}
-                  </Paper>
+                  </Stack>
                 )}
                 {data.meetings.length > 0 && (
-                  <Paper elevation={3}>
-                    <Typography variant={"h4"} padding={"1rem"}>
-                      {t("meeting")}
-                    </Typography>
+                  <Stack spacing={1}>
+                    <Paper elevation={4}>
+                      <Typography variant={"h5"} padding={"1rem"}>
+                        {t("meeting")}
+                      </Typography>
+                    </Paper>
+
                     {data.meetings.map((meeting: MeetingListSchema) => (
-                      <MeetingCard meeting={meeting} key={meeting.id} />
+                      <MeetingCard meeting={meeting} key={meeting.code} />
                     ))}
-                  </Paper>
+                  </Stack>
                 )}
               </Stack>
             </CenteredBox>
           </Stack>
         </CenteredBox>
       </Box>
+
       <Box className={styles.intro}>
         <Container>
           <Box display="flex" justifyContent="center" alignItems="center">
@@ -101,10 +108,14 @@ export default function Home(
               {t("text_1")} {t("text_2")}
             </Typography>
           </Box>
+          <CenteredBox>
+            <Image src={GobanCut} alt="goban" />
+          </CenteredBox>
         </Container>
       </Box>
-      <Paper>
-        <Container>
+
+      <Container>
+        <Paper>
           <ImageSection
             image={Meeting1}
             header={t("map_header")}
@@ -137,8 +148,8 @@ export default function Home(
             description={t("section_4_text")}
             direction={"row-reverse"}
           />
-        </Container>
-      </Paper>
+        </Paper>
+      </Container>
     </>
   );
 }

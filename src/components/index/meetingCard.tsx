@@ -6,7 +6,6 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { MeetingListSchema } from "@/consts/meetings/types";
-import { Link } from "@mui/material";
 import { useTranslation } from "next-i18next";
 import { getLocalizedDateString } from "@/utils/functions";
 
@@ -15,27 +14,22 @@ interface Props {
 }
 
 const MeetingCard: React.FC<Props> = ({ meeting }) => {
-  const { i18n } = useTranslation("common");
+  const { i18n, t } = useTranslation("common");
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        <Typography sx={{ fontSize: 16 }} color="text.primary" gutterBottom>
-          {meeting.name}
-        </Typography>
-        <Typography variant="body2" component="div">
-          <span>{meeting.address}</span>
-        </Typography>
-        <Typography variant="body2" component="div">
+        <Typography gutterBottom>{meeting.name}</Typography>
+        <Typography variant="body1" component="div">
           {getLocalizedDateString(i18n.language, meeting.date)}
         </Typography>
-        <Typography variant="body2">
+        <Typography variant="body1">
           {meeting.start_time}
           {meeting.end_time !== null && <span> - {meeting.end_time}</span>}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button href={`/meetings/${meeting.id}`} variant="contained">
-          Szczegóły
+        <Button href={`/meetings/${meeting.code}`} variant="contained">
+          {t("details_button_text")}
         </Button>
       </CardActions>
     </Card>

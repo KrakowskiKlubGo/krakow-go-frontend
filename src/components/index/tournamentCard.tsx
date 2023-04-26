@@ -13,15 +13,13 @@ interface Props {
 }
 
 const TournamentCard: React.FC<Props> = ({ tournament }) => {
-  const { i18n } = useTranslation("common");
+  const { i18n, t } = useTranslation("common");
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        <Typography sx={{ fontSize: 16 }} color="text.primary" gutterBottom>
-          {tournament.name}
-        </Typography>
-        <Typography variant="h5"></Typography>
-        <Typography variant="body2">
+        <Typography gutterBottom>{tournament.name}</Typography>
+        <br></br>
+        <Typography variant="body1">
           {getLocalizedDateString(
             i18n.language,
             tournament.start_date,
@@ -31,7 +29,7 @@ const TournamentCard: React.FC<Props> = ({ tournament }) => {
       </CardContent>
       <CardActions>
         <Button variant="contained" href={`/tournaments/${tournament.code}`}>
-          Szczegóły
+          {t("details_button_text")}
         </Button>
       </CardActions>
     </Card>

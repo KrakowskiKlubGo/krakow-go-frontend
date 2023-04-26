@@ -10,7 +10,7 @@ import useSWR from "swr";
 import { captchaUrl, EgdGetPlayerDataByDataUrl } from "@/consts/api/urls";
 import { captchaFetcher, EgdGetPlayerDataByData } from "@/api/api_methods";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   label: string;
@@ -30,7 +30,7 @@ const EgdLastNameAutocomplete: React.FC<Props> = (props) => {
     []
   );
 
-  //const loading = open && options.length === 0 && inputValue.length > 2;
+  const { t } = useTranslation("registration");
 
   React.useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -59,7 +59,13 @@ const EgdLastNameAutocomplete: React.FC<Props> = (props) => {
     <Autocomplete
       id={props.id}
       freeSolo
-      renderInput={(params) => <TextField {...params} label={props.label} />}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={props.label}
+          helperText={t("autocomplete_helper")}
+        />
+      )}
       autoSelect={false}
       open={open}
       onOpen={() => {

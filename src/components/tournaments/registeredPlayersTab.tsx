@@ -18,14 +18,20 @@ const RegisteredPlayersPanel: React.FC<Props> = ({
   registration_info,
 }) => {
   const { t } = useTranslation("registration");
-  const players_list = registered_players.slice(
-    0,
-    Math.min(registration_info.player_limit, registered_players.length)
-  );
-  const waiting_list = registered_players.slice(
-    registration_info.player_limit,
-    registered_players.length
-  );
+  const players_list =
+    registration_info.player_limit != null
+      ? registered_players.slice(
+          0,
+          Math.min(registration_info.player_limit, registered_players.length)
+        )
+      : registered_players;
+  const waiting_list =
+    registration_info.player_limit != null
+      ? registered_players.slice(
+          registration_info.player_limit,
+          registered_players.length
+        )
+      : [];
 
   return (
     <>

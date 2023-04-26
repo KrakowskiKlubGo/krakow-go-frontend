@@ -35,11 +35,16 @@ export const getDataFromBackend = async (api_url: string, locale: string) => {
   }
 };
 
-export const postDataToBackend = async (api_url: string, data: any) => {
+export const postDataToBackend = async (
+  api_url: string,
+  data: any,
+  locale: string
+) => {
   try {
     const response = await fetch(api_url, {
       headers: {
         "Content-Type": "application/json",
+        "Accept-Language": locale,
       },
       method: "POST",
       body: JSON.stringify(data),
@@ -61,8 +66,8 @@ export const getMeetingsList = async (locale: string) => {
   return getDataFromBackend(meetingsListUrl, locale);
 };
 
-export const getMeetingDetails = async (id: string, locale: string) => {
-  return getDataFromBackend(meetingDetailUrl(id), locale);
+export const getMeetingDetails = async (code: string, locale: string) => {
+  return getDataFromBackend(meetingDetailUrl(code), locale);
 };
 
 export const getAllTournamentsList = async (locale: string) => {
@@ -81,8 +86,12 @@ export const GetTournamentDetails = (code: string, locale: string) => {
   return getDataFromBackend(tournamentDetailUrl(code), locale);
 };
 
-export const registerPlayer = async (id: number, data: any) => {
-  return postDataToBackend(tournamentRegistrationUrl(id), data);
+export const registerPlayer = async (
+  code: string,
+  data: any,
+  locale: string
+) => {
+  return postDataToBackend(tournamentRegistrationUrl(code), data, locale);
 };
 
 export const captchaFetcher = (url: string) =>

@@ -11,14 +11,13 @@ import {
   TournamentListSchema,
 } from "@/consts/tournamens/types";
 import { GetTournamentDetails, getAllTournamentsList } from "@/api/api_methods";
-import { detailTournamentPageParams } from "@/consts/interfaces";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import CenteredBox from "@/components/common/CenteredBox";
 import Image from "next/image";
 import TournamentResultsPanel from "@/components/tournaments/TournamentResultsPanel";
 import { getLocalizedDateString } from "@/utils/functions";
-import { width } from "@mui/system";
+import { detailPageParams } from "@/consts/interfaces";
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const tournaments: TournamentListSchema[] = await getAllTournamentsList("pl");
@@ -40,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { code } = context.params as detailTournamentPageParams;
+  const { code } = context.params as detailPageParams;
 
   const tournament: TournamentDetailSchema[] = await GetTournamentDetails(
     code,
@@ -93,7 +92,9 @@ export default function TournamentDetail(
 ) {
   const [value, setValue] = React.useState(0);
   const registration_enable =
-    data.tournament.registration_info.end_date > new Date();
+    data.tournament.registration_info.end_date != null
+      ? new Date(data.tournament.registration_info.end_date) > new Date()
+      : true;
   const registered_players_enable =
     data.tournament.registered_players.length > 0;
   const results_enable = data.tournament.tournament_results.length > 0;
@@ -108,7 +109,7 @@ export default function TournamentDetail(
           <Stack
             spacing={10}
             direction={{ xs: "column", md: "row" }}
-            sx={{ m: 1, p: 3 }}
+            sx={{ p: 3 }}
           >
             <Box>
               <Image

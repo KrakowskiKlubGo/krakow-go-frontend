@@ -1,5 +1,5 @@
 export type MeetingListSchema = {
-  id: number;
+  code: string;
   name: string;
   date: string;
   start_time: string;

@@ -10,5 +10,6 @@
   "order": "No.",
   "registration_limit_info": "",
   "registered_players_list": "Registered players list:",
-  "waiting_list": "Waiting list"
+  "waiting_list": "Waiting list",
+    "autocomplete_helper_EN": "Type at least 3 characters to search in EGD database"
 }

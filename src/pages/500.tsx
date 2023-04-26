@@ -13,7 +13,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   };
 };
 
-export default function Page500(
+export default function Custom500(
   data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const { t } = useTranslation("errors");

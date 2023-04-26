@@ -6,10 +6,11 @@ export const IncomingTournamentsListUrl = `${apiBaseUrl}/tournaments/?is_ended=f
 export const EndedTournamentsListUrl = `${apiBaseUrl}/tournaments/?is_ended=true&is_draft=false`;
 export const tournamentDetailUrl = (code: string) =>
   `${apiBaseUrl}/tournaments/${code}/`;
-export const tournamentRegistrationUrl = (id: number) =>
-  `${apiBaseUrl}/tournaments/${id}/register-player/`;
+export const tournamentRegistrationUrl = (code: string) =>
+  `${apiBaseUrl}/tournaments/${code}/register-player/`;
 export const meetingsListUrl = `${apiBaseUrl}/meetings/`;
-export const meetingDetailUrl = (id: string) => `${apiBaseUrl}/meetings/${id}/`;
+export const meetingDetailUrl = (code: string) =>
+  `${apiBaseUrl}/meetings/${code}/`;
 
 export const captchaUrl = `${apiBaseUrl}/captcha/`;
 

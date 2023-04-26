@@ -52,10 +52,11 @@ export type TournamentInfoDetailListFields = Pick<
 >;
 
 export type RegistrationInfoSchema = {
-  tournament_id: number;
-  end_date: string;
-  player_limit: number;
+  tournament_code: string;
+  end_date: string | null;
+  player_limit: number | null;
   registered_players: number;
+  description: string | null;
 };
 
 export type RegisteredPlayersSchema = {

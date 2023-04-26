@@ -38,7 +38,7 @@ export default function Tournaments(
   const { t } = useTranslation("tournaments");
   return (
     <Container>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box>
         <Paper>
           {incoming_tournaments_available && (
             <Box padding={2}>

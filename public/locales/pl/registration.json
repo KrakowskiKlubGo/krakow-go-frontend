@@ -10,5 +10,6 @@
   "register_success_back_button_text": "Powrót",
   "registration_limit_info": "",
   "registered_players_list": "Lista zarejestrowanych graczy:",
-  "waiting_list": "Lista rezerwowa"
+  "waiting_list": "Lista rezerwowa",
+  "autocomplete_helper": "Wpisz conajmniej 3 znaki aby wyszkuać w bazie EGD"
 }
