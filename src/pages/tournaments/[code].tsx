@@ -16,7 +16,7 @@ import { useTranslation } from "next-i18next";
 import CenteredBox from "@/components/common/CenteredBox";
 import Image from "next/image";
 import TournamentResultsPanel from "@/components/tournaments/TournamentResultsPanel";
-import { getLocalizedDateString } from "@/utils/functions";
+import { getLocalizedMonthDateString } from "@/utils/functions";
 import { detailPageParams } from "@/consts/interfaces";
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
@@ -121,9 +121,9 @@ export default function TournamentDetail(
             </Box>
 
             <Box>
-              <Typography variant={"h2"}>{data.tournament.name}</Typography>
+              <Typography variant={"h3"}>{data.tournament.name}</Typography>
               <Typography variant={"h4"}>
-                {getLocalizedDateString(
+                {getLocalizedMonthDateString(
                   i18n.language,
                   data.tournament.start_date,
                   data.tournament.end_date

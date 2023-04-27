@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { MeetingListSchema } from "@/consts/meetings/types";
 import { useTranslation } from "next-i18next";
-import { getLocalizedDateString } from "@/utils/functions";
+import { getLocalizedMonthDateString } from "@/utils/functions";
 
 interface Props {
   meeting: MeetingListSchema;
@@ -20,7 +20,7 @@ const MeetingCard: React.FC<Props> = ({ meeting }) => {
       <CardContent>
         <Typography gutterBottom>{meeting.name}</Typography>
         <Typography variant="body1" component="div">
-          {getLocalizedDateString(i18n.language, meeting.date)}
+          {getLocalizedMonthDateString(i18n.language, meeting.date)}
         </Typography>
         <Typography variant="body1">
           {meeting.start_time}

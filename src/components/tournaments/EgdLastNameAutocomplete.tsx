@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Autocomplete, CircularProgress, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  CircularProgress,
+  InputAdornment,
+  Stack,
+  TextField,
+} from "@mui/material";
 import {
   CaptchaSchema,
   EgdGetPlayerDataByDataSchema,
@@ -11,6 +17,9 @@ import { captchaUrl, EgdGetPlayerDataByDataUrl } from "@/consts/api/urls";
 import { captchaFetcher, EgdGetPlayerDataByData } from "@/api/api_methods";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
+import HelpEgdRegistrationPopover from "@/components/tournaments/helpEgdRegistrationPopover";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { ReactNode } from "react";
 
 interface Props {
   label: string;
@@ -55,16 +64,21 @@ const EgdLastNameAutocomplete: React.FC<Props> = (props) => {
     }
   }, [debouncedInputValue]);
 
+  const helper: ReactNode = (
+    <Stack direction={"row"}>
+      <Typography variant="body2" color="text.secondary">
+        {t("autocomplete_help_text")}
+      </Typography>
+      <HelpEgdRegistrationPopover help_text={t("autocomplete_help_popover")} />
+    </Stack>
+  );
+
   return (
     <Autocomplete
       id={props.id}
       freeSolo
       renderInput={(params) => (
-        <TextField
-          {...params}
-          label={props.label}
-          helperText={t("autocomplete_helper")}
-        />
+        <TextField {...params} label={props.label} helperText={helper} />
       )}
       autoSelect={false}
       open={open}

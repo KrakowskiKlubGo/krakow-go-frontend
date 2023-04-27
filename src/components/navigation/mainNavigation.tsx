@@ -34,7 +34,7 @@ interface Props {
 // @ts-ignore
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
-export default function MainAppBar(props: Props) {
+const MainAppBar: React.FC<Props> = (props) => {
   const { i18n, t } = useTranslation("common");
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -192,4 +192,6 @@ export default function MainAppBar(props: Props) {
       <Offset />
     </>
   );
-}
+};
+
+export default MainAppBar;

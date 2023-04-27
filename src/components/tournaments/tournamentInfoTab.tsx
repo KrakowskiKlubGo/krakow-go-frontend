@@ -16,12 +16,13 @@ import {
 import Box from "@mui/material/Box";
 import FiberManualRecordSharpIcon from "@mui/icons-material/FiberManualRecordSharp";
 import { useTranslation } from "next-i18next";
+import { getLocalizedDayOfWeekString } from "@/utils/functions";
 interface Props {
   tournament_info: TournamentInfoSchema;
 }
 
 const TournamentInfoPanel: React.FC<Props> = ({ tournament_info }) => {
-  const { t } = useTranslation("tournaments");
+  const { t, i18n } = useTranslation("tournaments");
   const schedule_activities_dates = new Set(
     tournament_info.scheduled_activities.map((activity) => activity.date)
   );
@@ -46,7 +47,7 @@ const TournamentInfoPanel: React.FC<Props> = ({ tournament_info }) => {
   return (
     <>
       <Box sx={{ m: 3, p: 1 }}>
-        <Typography variant={"h4"}>{tournament_info.description}</Typography>
+        <Typography variant={"h6"}>{tournament_info.description}</Typography>
       </Box>
 
       <Box sx={{ m: 3, p: 1 }}>
@@ -58,6 +59,8 @@ const TournamentInfoPanel: React.FC<Props> = ({ tournament_info }) => {
                 sx={{ whiteSpace: "pre-wrap" }}
                 primary={t(item)}
                 secondary={tournament_info[item]}
+                primaryTypographyProps={{ variant: "h6" }}
+                secondaryTypographyProps={{ variant: "body1" }}
               />
             </ListItem>
           ))}
@@ -66,8 +69,19 @@ const TournamentInfoPanel: React.FC<Props> = ({ tournament_info }) => {
 
       <Box sx={{ m: 3, p: 3 }}>
         <Typography variant={"h5"}>{t("address_header")}</Typography>
-        <Typography variant={"body1"}>{tournament_info.place}</Typography>
-        <Typography variant={"body1"}>{tournament_info.address}</Typography>
+        <List>
+          <ListItem>
+            <Typography variant={"body1"} sx={{ whiteSpace: "pre-wrap" }}>
+              {tournament_info.place}
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <Typography variant={"body1"} sx={{ whiteSpace: "pre-wrap" }}>
+              {tournament_info.address}
+            </Typography>
+          </ListItem>
+        </List>
+
         <iframe
           src={tournament_info.address_map_link}
           allowFullScreen={false}
@@ -78,30 +92,36 @@ const TournamentInfoPanel: React.FC<Props> = ({ tournament_info }) => {
 
       <Box sx={{ m: 3, p: 3 }}>
         <Typography variant={"h5"}>{t("schedule_header")}</Typography>
-        {Array.from(schedule_activities_dates).map((date) => {
-          return (
-            <>
-              <Typography>{date}</Typography>
-              <List>
-                {tournament_info.scheduled_activities.map((activity) => {
-                  return (
-                    activity.date === date && (
-                      <ListItem key={`${activity.date}${activity.time}`}>
-                        <ListItemAvatar>
-                          <FiberManualRecordSharpIcon fontSize={"small"} />
-                        </ListItemAvatar>
-                        <ListItemText
-                          secondary={activity.activity_name}
-                          primary={activity.time}
-                        />
-                      </ListItem>
-                    )
-                  );
-                })}
-              </List>
-            </>
-          );
-        })}
+        <List>
+          {Array.from(schedule_activities_dates).map((date, index) => {
+            return (
+              <>
+                <Typography>
+                  {getLocalizedDayOfWeekString(i18n.language, date)}
+                </Typography>
+                <List>
+                  {tournament_info.scheduled_activities.map((activity) => {
+                    return (
+                      activity.date === date && (
+                        <ListItem key={`${activity.date}${activity.time}`}>
+                          <ListItemAvatar>
+                            <FiberManualRecordSharpIcon fontSize={"small"} />
+                          </ListItemAvatar>
+                          <ListItemText
+                            secondary={activity.activity_name}
+                            primary={activity.time}
+                            primaryTypographyProps={{ variant: "h6" }}
+                            secondaryTypographyProps={{ variant: "body1" }}
+                          />
+                        </ListItem>
+                      )
+                    );
+                  })}
+                </List>
+              </>
+            );
+          })}
+        </List>
       </Box>
     </>
   );

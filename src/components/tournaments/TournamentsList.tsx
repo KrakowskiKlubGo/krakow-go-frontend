@@ -3,7 +3,7 @@ import { TournamentListSchema } from "@/consts/tournamens/types";
 import { List, ListItem } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { getLocalizedDateString } from "@/utils/functions";
+import { getLocalizedMonthDateString } from "@/utils/functions";
 import { useTranslation } from "next-i18next";
 
 interface Props {
@@ -19,7 +19,7 @@ const TournamentsList: React.FC<Props> = ({ tournaments }) => {
           <ListItemButton href={`/tournaments/${tournament.code}`}>
             <ListItemText
               primary={tournament.name}
-              secondary={getLocalizedDateString(
+              secondary={getLocalizedMonthDateString(
                 i18n.language,
                 tournament.start_date,
                 tournament.end_date

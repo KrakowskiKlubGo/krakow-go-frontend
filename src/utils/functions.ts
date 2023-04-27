@@ -3,7 +3,7 @@ import {
   TournamentListSchema,
 } from "@/consts/tournamens/types";
 
-export const getLocalizedDateString = (
+export const getLocalizedMonthDateString = (
   locale: string,
   start_date_string: string,
   end_date_string: string | null = null
@@ -35,4 +35,15 @@ export const getLocalizedDateString = (
     month: "long",
     year: "numeric",
   })}`;
+};
+
+export const getLocalizedDayOfWeekString = (
+  locale: string,
+  date: string
+): string => {
+  const dateObj = new Date(date);
+  const month = dateObj.toLocaleString(locale, { month: "long" });
+  const weekday = dateObj.toLocaleString(locale, { weekday: "long" });
+
+  return `${dateObj.getDate()} ${month} (${weekday})`;
 };

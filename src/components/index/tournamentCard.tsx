@@ -4,7 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { getLocalizedDateString } from "@/utils/functions";
+import { getLocalizedMonthDateString } from "@/utils/functions";
 import { TournamentListSchema } from "@/consts/tournamens/types";
 import { useTranslation } from "next-i18next";
 
@@ -20,7 +20,7 @@ const TournamentCard: React.FC<Props> = ({ tournament }) => {
         <Typography gutterBottom>{tournament.name}</Typography>
         <br></br>
         <Typography variant="body1">
-          {getLocalizedDateString(
+          {getLocalizedMonthDateString(
             i18n.language,
             tournament.start_date,
             tournament.end_date

@@ -13,7 +13,7 @@ import {
   Paper,
 } from "@mui/material";
 import { Facebook, Mail } from "@mui/icons-material";
-import Discord from "public/images/discord-icon.svg";
+import Discord from "public/images/discord-icon.png";
 
 import * as React from "react";
 import Image from "next/image";
@@ -66,7 +66,6 @@ export default function Contact(
                 target="_blank"
               >
                 <Typography>Discord Krakowski Klub Go </Typography>
-                <i className="bi bi-discord"></i>
               </Link>
             </ListItem>
           </List>

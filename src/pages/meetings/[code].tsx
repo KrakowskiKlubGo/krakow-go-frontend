@@ -11,6 +11,8 @@ import { getMeetingDetails, getMeetingsList } from "@/api/api_methods";
 import { detailPageParams } from "@/consts/interfaces";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import CenteredBox from "@/components/common/CenteredBox";
+import { getLocalizedMonthDateString } from "@/utils/functions";
+import { useTranslation } from "next-i18next";
 
 export const getStaticPaths = async () => {
   const meetings: MeetingListSchema[] = await getMeetingsList("pl");
@@ -46,13 +48,17 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function MeetingDetail(
   data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
+  const { i18n } = useTranslation("common");
+
   return (
     <>
       <Container>
         <CenteredBox>
           <Paper sx={{ m: 3, p: 3 }}>
             <Typography variant={"h5"}>{data.meeting.name}</Typography>
-            <Typography variant={"body1"}>{data.meeting.date}</Typography>
+            <Typography variant={"body1"}>
+              {getLocalizedMonthDateString(i18n.language, data.meeting.date)}
+            </Typography>
 
             <Typography variant={"body1"} paddingBottom={"1rem"}>
               {data.meeting.start_time}

@@ -13,6 +13,7 @@ import "../styles/highlighter.scss";
 import { appWithTranslation } from "next-i18next";
 import { Box } from "@mui/material";
 import Image from "next/image";
+import Footer from "@/components/navigation/footer";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -46,6 +47,7 @@ const MyApp = (props: MyAppProps) => {
           <Box className={styles.background}></Box>
           <Component {...pageProps} />
         </main>
+        <Footer />
       </ThemeProvider>
     </CacheProvider>
   );

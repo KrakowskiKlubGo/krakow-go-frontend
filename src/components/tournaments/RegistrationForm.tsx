@@ -2,6 +2,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import {
   Backdrop,
+  Box,
   CircularProgress,
   Container,
   Dialog,
@@ -9,7 +10,9 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  Grid,
   Paper,
+  Popover,
   Stack,
   TextField,
 } from "@mui/material";
@@ -28,6 +31,9 @@ import { CaptchaImage } from "@/components/common/CaptchaImage";
 import { useTranslation } from "next-i18next";
 import EgdLastNameAutocomplete from "@/components/tournaments/EgdLastNameAutocomplete";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import HelpEgdRegistrationPopover from "@/components/tournaments/helpEgdRegistrationPopover";
 interface Props {
   registration_info: RegistrationInfoSchema;
 }
@@ -101,7 +107,7 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
             )}
 
             <CenteredBox>
-              <FormControl size="small">
+              <FormControl>
                 <CenteredBox>
                   <EgdLastNameAutocomplete
                     label={t("last_name")}

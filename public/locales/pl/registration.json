@@ -11,5 +11,6 @@
   "registration_limit_info": "",
   "registered_players_list": "Lista zarejestrowanych graczy:",
   "waiting_list": "Lista rezerwowa",
-  "autocomplete_helper": "Wpisz conajmniej 3 znaki aby wyszkuać w bazie EGD"
+  "autocomplete_help_text": "Wpisz conajmniej 3 znaki aby wyszkuać w bazie EGD",
+  "autocomplete_help_popover": "Gracze, którzy grali w przynajmniej jednym turnieju mogą wyszukać swoje dane w bazie aby automatycznie uzupełnić formularz. Jeśli jest to Twój pierwszy turniej, nie martw się, możesz wypełnić formularz ręcznie."
 }
