@@ -1,6 +1,6 @@
 import * as process from "process";
 
-export const apiBaseUrl = process.env.BACKEND_API_BASE_URL;
+export const apiBaseUrl = process.env.NEXT_PUBLIC_BACKEND_API_BASE_URL;
 
 export const tournamentsListUrl = `${apiBaseUrl}/tournaments/`;
 export const IncomingTournamentsListUrl = `${apiBaseUrl}/tournaments/?is_ended=false&is_draft=false`;

@@ -33,6 +33,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       tournaments,
       meetings,
       ...(await serverSideTranslations(locale ?? "pl", ["common", "main"])),
+      revalidate: 60,
     },
   };
 };

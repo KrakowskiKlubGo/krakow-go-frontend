@@ -26,6 +26,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         "common",
         "tournaments",
       ])),
+      revalidate: 60,
     },
   };
 };
