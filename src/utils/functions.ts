@@ -1,8 +1,3 @@
-import {
-  TournamentDetailSchema,
-  TournamentListSchema,
-} from "@/consts/tournamens/types";
-
 export const getLocalizedMonthDateString = (
   locale: string,
   start_date_string: string,

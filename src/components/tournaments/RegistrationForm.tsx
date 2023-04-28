@@ -2,9 +2,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import {
   Backdrop,
-  Box,
   CircularProgress,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
@@ -31,9 +29,7 @@ import { CaptchaImage } from "@/components/common/CaptchaImage";
 import { useTranslation } from "next-i18next";
 import EgdLastNameAutocomplete from "@/components/tournaments/EgdLastNameAutocomplete";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
-import HelpEgdRegistrationPopover from "@/components/tournaments/helpEgdRegistrationPopover";
+
 interface Props {
   registration_info: RegistrationInfoSchema;
 }

@@ -1,7 +1,5 @@
 import {
-  captchaUrl,
   EgdGetPlayerDataByDataUrl,
-  EgdGetPlayerDataByPinUrl,
   EndedTournamentsListUrl,
   IncomingTournamentsListUrl,
   meetingDetailUrl,
@@ -10,10 +8,7 @@ import {
   tournamentRegistrationUrl,
   tournamentsListUrl,
 } from "@/consts/api/urls";
-import {
-  EgdGetPlayerDataByDataSchema,
-  EgdPlayerDataSchema,
-} from "@/consts/tournamens/types";
+import { EgdPlayerDataSchema } from "@/consts/tournamens/types";
 
 export const getDataFromBackend = async (api_url: string, locale: string) => {
   try {

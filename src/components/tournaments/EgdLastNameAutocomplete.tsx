@@ -1,24 +1,10 @@
 import * as React from "react";
-import {
-  Autocomplete,
-  CircularProgress,
-  InputAdornment,
-  Stack,
-  TextField,
-} from "@mui/material";
-import {
-  CaptchaSchema,
-  EgdGetPlayerDataByDataSchema,
-  EgdPlayerDataSchema,
-} from "@/consts/tournamens/types";
-import debounce from "@mui/utils/debounce";
-import useSWR from "swr";
-import { captchaUrl, EgdGetPlayerDataByDataUrl } from "@/consts/api/urls";
-import { captchaFetcher, EgdGetPlayerDataByData } from "@/api/api_methods";
+import { Autocomplete, Stack, TextField } from "@mui/material";
+import { EgdPlayerDataSchema } from "@/consts/tournamens/types";
+import { EgdGetPlayerDataByDataUrl } from "@/consts/api/urls";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import HelpEgdRegistrationPopover from "@/components/tournaments/helpEgdRegistrationPopover";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { ReactNode } from "react";
 
 interface Props {

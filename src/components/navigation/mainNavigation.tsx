@@ -52,7 +52,6 @@ const MainAppBar: React.FC<Props> = (props) => {
   const links: MenuLink[] = [
     { href: "/", label: t("home") },
     { href: "/tournaments", label: t("tournaments") },
-    { href: "/learn", label: t("learn") },
     { href: "/contact", label: t("contact") },
   ];
 
