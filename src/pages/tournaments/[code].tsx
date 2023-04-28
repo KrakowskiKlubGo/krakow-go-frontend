@@ -25,26 +25,26 @@ import TournamentResultsPanel from "@/components/tournaments/TournamentResultsPa
 import { getLocalizedMonthDateString } from "@/utils/functions";
 import { detailPageParams } from "@/consts/interfaces";
 
-// export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-//   const tournaments: TournamentListSchema[] = await getAllTournamentsList("pl");
-//   const validLocales = locales && Array.isArray(locales) ? locales : [];
-//
-//   const paths = tournaments.flatMap((tournament) => {
-//     return validLocales.map((locale) => {
-//       return {
-//         params: { code: tournament.code },
-//         locale: locale,
-//       };
-//     });
-//   });
-//
-//   return {
-//     paths,
-//     fallback: true,
-//   };
-// };
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+  const tournaments: TournamentListSchema[] = await getAllTournamentsList("pl");
+  const validLocales = locales && Array.isArray(locales) ? locales : [];
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+  const paths = tournaments.flatMap((tournament) => {
+    return validLocales.map((locale) => {
+      return {
+        params: { code: tournament.code },
+        locale: locale,
+      };
+    });
+  });
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
   const { code } = context.params as detailPageParams;
 
   const tournament: TournamentDetailSchema[] = await GetTournamentDetails(
@@ -60,6 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         "registration",
         "tournaments",
       ])),
+      revalidate: 60,
     },
   };
 };
@@ -94,7 +95,7 @@ function a11yProps(index: number) {
 }
 
 export default function TournamentDetail(
-  data: InferGetServerSidePropsType<typeof getServerSideProps>
+  data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const [value, setValue] = React.useState(0);
   const registration_enable =
