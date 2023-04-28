@@ -8,10 +8,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "127.0.0.1",
-        port: "8000",
-        pathname: "/media/**",
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: `/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/**`,
       },
     ],
   },
