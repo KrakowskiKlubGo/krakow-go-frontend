@@ -41,11 +41,15 @@ const EgdLastNameAutocomplete: React.FC<Props> = (props) => {
         .then((response) => response.json())
         .then((data) => {
           if (data) {
+            console.log(data);
             if (data.retcode == "Ok") {
               setOptions(data.players);
+            } else {
+              setOptions([]);
             }
+          } else {
+            setOptions([]);
           }
-          setOptions([]);
         });
     } else {
       setOptions([]);

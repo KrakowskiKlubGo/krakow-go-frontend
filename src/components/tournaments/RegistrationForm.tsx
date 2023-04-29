@@ -176,10 +176,20 @@ const RegistrationForm: React.FC<Props> = ({
                   />{" "}
                 </CenteredBox>
                 <CenteredBox>
-                  <TextField id="email" label={t("email")} defaultValue="" />{" "}
+                  <TextField
+                    id="email"
+                    label={t("email")}
+                    defaultValue=""
+                    type={"email"}
+                  />{" "}
                 </CenteredBox>
                 <CenteredBox>
-                  <TextField id="phone" label={t("phone")} defaultValue="" />{" "}
+                  <TextField
+                    id="phone"
+                    label={t("phone")}
+                    defaultValue=""
+                    type={"tel"}
+                  />{" "}
                 </CenteredBox>
 
                 <CenteredBox>
