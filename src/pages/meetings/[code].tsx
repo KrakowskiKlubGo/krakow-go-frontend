@@ -1,4 +1,4 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 
 import Typography from "@mui/material/Typography";
 import { Container, Paper, Tab, Tabs } from "@mui/material";
@@ -14,13 +14,17 @@ import CenteredBox from "@/components/common/CenteredBox";
 import { getLocalizedMonthDateString } from "@/utils/functions";
 import { useTranslation } from "next-i18next";
 
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const meetings: MeetingListSchema[] = await getMeetingsList("pl");
+  const validLocales = locales && Array.isArray(locales) ? locales : [];
 
-  const paths = meetings.map((meeting) => {
-    return {
-      params: { code: meeting.code },
-    };
+  const paths = meetings.flatMap((meeting) => {
+    return validLocales.map((locale) => {
+      return {
+        params: { code: meeting.code },
+        locale: locale,
+      };
+    });
   });
 
   return {

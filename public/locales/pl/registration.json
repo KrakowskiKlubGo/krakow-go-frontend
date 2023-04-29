@@ -5,6 +5,8 @@
   "rank": "Siła",
   "club_city": "Klub/Miasto",
   "country": "Kraj",
+  "email": "E-mail",
+  "phone": "nr. telefonu",
   "order": "No.",
   "register_button_text": "Zarejestruj",
   "register_success_back_button_text": "Powrót",

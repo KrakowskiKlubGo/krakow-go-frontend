@@ -5,6 +5,8 @@
   "rank": "Rank",
   "club_city": "Club/City",
   "country": "Country",
+  "email": "E-mail",
+  "phone": "Phone",
   "register_button_text": "Register",
   "register_success_back_button_text": "Powrót",
   "order": "No.",

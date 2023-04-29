@@ -67,6 +67,8 @@ const RegistrationForm: React.FC<Props> = ({
         egf_pid: target.egf_pid.value,
         captcha_key: data?.captcha_key,
         captcha_value: target.captcha_value.value,
+        email: target.email.value,
+        phone: target.phone.value,
       };
 
       const response_message = await registerPlayer(
@@ -172,6 +174,12 @@ const RegistrationForm: React.FC<Props> = ({
                     value={egfPidText}
                     onChange={(event) => setEgfPidText(event.target.value)}
                   />{" "}
+                </CenteredBox>
+                <CenteredBox>
+                  <TextField id="email" label={t("email")} defaultValue="" />{" "}
+                </CenteredBox>
+                <CenteredBox>
+                  <TextField id="phone" label={t("phone")} defaultValue="" />{" "}
                 </CenteredBox>
 
                 <CenteredBox>

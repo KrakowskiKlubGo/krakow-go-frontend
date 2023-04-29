@@ -99,6 +99,8 @@ export type PlayerRegistrationFormSchema = {
   city_club: string;
   country: string;
   egf_pid: string;
+  email: string;
+  phone: string;
   captcha_key: string | null;
   captcha_value: string;
 };

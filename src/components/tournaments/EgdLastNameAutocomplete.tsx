@@ -34,16 +34,18 @@ const EgdLastNameAutocomplete: React.FC<Props> = (props) => {
 
     return () => clearTimeout(delayDebounceFn);
   }, [inputValue]);
+
   React.useEffect(() => {
     if (debouncedInputValue && debouncedInputValue.length > 2) {
       fetch(EgdGetPlayerDataByDataUrl(debouncedInputValue))
         .then((response) => response.json())
         .then((data) => {
           if (data) {
-            setOptions(data.players);
-          } else {
-            setOptions([]);
+            if (data.retcode == "Ok") {
+              setOptions(data.players);
+            }
           }
+          setOptions([]);
         });
     } else {
       setOptions([]);
