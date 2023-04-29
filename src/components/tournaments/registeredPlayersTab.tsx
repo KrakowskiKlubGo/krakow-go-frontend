@@ -7,16 +7,25 @@ import {
 import { useTranslation } from "next-i18next";
 import Typography from "@mui/material/Typography";
 import PlayersTable from "@/components/tournaments/PlayersTable";
+import useSWR from "swr";
+import { tournamentRegisteredPlayersUrl } from "@/consts/api/urls";
+import { string } from "prop-types";
 
 interface Props {
-  registered_players: RegisteredPlayersSchema[];
+  tournament_code: string;
   registration_info: RegistrationInfoSchema;
 }
 
 const RegisteredPlayersPanel: React.FC<Props> = ({
-  registered_players,
   registration_info,
+  tournament_code,
 }) => {
+  const fetcher = (url: string) => fetch(url).then((r) => r.json());
+  const { data } = useSWR<RegisteredPlayersSchema[]>(
+    tournamentRegisteredPlayersUrl(tournament_code),
+    fetcher
+  );
+  const registered_players = data ?? [];
   const { t } = useTranslation("registration");
   const players_list =
     registration_info.player_limit != null

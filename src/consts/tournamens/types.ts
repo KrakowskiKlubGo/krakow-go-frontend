@@ -52,7 +52,6 @@ export type TournamentInfoDetailListFields = Pick<
 >;
 
 export type RegistrationInfoSchema = {
-  tournament_code: string;
   end_date: string | null;
   player_limit: number | null;
   registered_players: number;
@@ -84,14 +83,13 @@ export type TournamentResultSchema = {
 };
 
 export type TournamentDetailSchema = {
+  code: string;
   name: string;
   image: string;
   start_date: string;
   end_date: string;
   tournament_info: TournamentInfoSchema;
   registration_info: RegistrationInfoSchema;
-  registered_players: RegisteredPlayersSchema[];
-  tournament_results: TournamentResultSchema[];
 };
 
 export type PlayerRegistrationFormSchema = {
@@ -119,15 +117,6 @@ export type EgdPlayerDataSchema = {
   Country_Code: string;
   Club: string;
   Grade: string;
-};
-
-export type EgdGetPlayerDataByDataSchema = {
-  retcode: string;
-  players: EgdPlayerDataSchema[];
-};
-
-export type EgdGetPlayerDataByPinSchema = EgdPlayerDataSchema & {
-  retcode: string;
 };
 
 export const ranks = [

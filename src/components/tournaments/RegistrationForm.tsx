@@ -8,9 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
-  Grid,
   Paper,
-  Popover,
   Stack,
   TextField,
 } from "@mui/material";
@@ -23,7 +21,7 @@ import {
 import { captchaFetcher, registerPlayer } from "@/api/api_methods";
 import CenteredBox from "@/components/common/CenteredBox";
 import { useState } from "react";
-import useSWR, { Fetcher } from "swr";
+import useSWR from "swr";
 import { captchaUrl } from "@/consts/api/urls";
 import { CaptchaImage } from "@/components/common/CaptchaImage";
 import { useTranslation } from "next-i18next";
@@ -32,9 +30,13 @@ import Typography from "@mui/material/Typography";
 
 interface Props {
   registration_info: RegistrationInfoSchema;
+  tournament_code: string;
 }
 
-const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
+const RegistrationForm: React.FC<Props> = ({
+  registration_info,
+  tournament_code,
+}) => {
   const [response, setResponse] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -93,11 +95,7 @@ const RegistrationForm: React.FC<Props> = ({ registration_info }) => {
         }}
       >
         <CenteredBox sx={{ m: 1, p: 2 }}>
-          <form
-            onSubmit={(event) =>
-              handleSubmit(event, registration_info.tournament_code)
-            }
-          >
+          <form onSubmit={(event) => handleSubmit(event, tournament_code)}>
             {registration_info.description && (
               <Typography>{registration_info.description}</Typography>
             )}

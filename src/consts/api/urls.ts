@@ -9,6 +9,12 @@ export const tournamentDetailUrl = (code: string) =>
   `${apiBaseUrl}/tournaments/${code}/`;
 export const tournamentRegistrationUrl = (code: string) =>
   `${apiBaseUrl}/tournaments/${code}/register-player/`;
+
+export const tournamentRegisteredPlayersUrl = (code: string) =>
+  `${apiBaseUrl}/tournaments/${code}/registered-players/`;
+
+export const tournamentResultsUrl = (code: string) =>
+  `${apiBaseUrl}/tournaments/${code}/results/`;
 export const meetingsListUrl = `${apiBaseUrl}/meetings/`;
 export const meetingDetailUrl = (code: string) =>
   `${apiBaseUrl}/meetings/${code}/`;

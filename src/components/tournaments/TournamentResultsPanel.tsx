@@ -1,4 +1,7 @@
-import { TournamentResultSchema } from "@/consts/tournamens/types";
+import {
+  RegisteredPlayersSchema,
+  TournamentResultSchema,
+} from "@/consts/tournamens/types";
 import * as React from "react";
 import {
   Accordion,
@@ -10,12 +13,30 @@ import {
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ResultTable from "./ResultTable";
+import useSWR from "swr";
+import { tournamentResultsUrl } from "@/consts/api/urls";
+import { useTranslation } from "react-i18next";
 
-interface Props {
-  results: TournamentResultSchema[];
-}
+type Props = {
+  tournament_code: string;
+};
 
-const TournamentResultsPanel: React.FC<Props> = ({ results }) => {
+const TournamentResultsPanel: React.FC<Props> = ({ tournament_code }) => {
+  const { i18n } = useTranslation("registration");
+  const fetcher = (url: string) =>
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept-Language": i18n.language,
+      },
+      method: "GET",
+    }).then((r) => r.json());
+
+  const { data } = useSWR<TournamentResultSchema[]>(
+    tournamentResultsUrl(tournament_code),
+    fetcher
+  );
+  const results = data ?? [];
   return (
     <>
       <Box sx={{ m: 1, p: 1 }}>

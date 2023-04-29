@@ -60,7 +60,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
         "registration",
         "tournaments",
       ])),
-      revalidate: 60,
     },
   };
 };
@@ -102,9 +101,6 @@ export default function TournamentDetail(
     data.tournament.registration_info.end_date != null
       ? new Date(data.tournament.registration_info.end_date) > new Date()
       : true;
-  const registered_players_enable =
-    data.tournament.registered_players.length > 0;
-  const results_enable = data.tournament.tournament_results.length > 0;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -153,16 +149,8 @@ export default function TournamentDetail(
                 {...a11yProps(1)}
                 disabled={!registration_enable}
               />
-              <Tab
-                label={t("registered_players_tab")}
-                {...a11yProps(2)}
-                disabled={!registered_players_enable}
-              />
-              <Tab
-                label="Results"
-                {...a11yProps(2)}
-                disabled={!results_enable}
-              />
+              <Tab label={t("registered_players_tab")} {...a11yProps(2)} />
+              <Tab label={t("results_tab")} {...a11yProps(2)} />
             </Tabs>
           </CenteredBox>
 
@@ -176,25 +164,20 @@ export default function TournamentDetail(
             <TabPanel value={value} index={1}>
               <RegistrationForm
                 registration_info={data.tournament.registration_info}
+                tournament_code={data.tournament.code}
               />
             </TabPanel>
           )}
-          {registered_players_enable && (
-            <TabPanel value={value} index={2}>
-              <RegisteredPlayersPanel
-                registered_players={data.tournament.registered_players}
-                registration_info={data.tournament.registration_info}
-              />
-            </TabPanel>
-          )}
+          <TabPanel value={value} index={2}>
+            <RegisteredPlayersPanel
+              tournament_code={data.tournament.code}
+              registration_info={data.tournament.registration_info}
+            />
+          </TabPanel>
 
-          {results_enable && (
-            <TabPanel value={value} index={3}>
-              <TournamentResultsPanel
-                results={data.tournament.tournament_results}
-              />
-            </TabPanel>
-          )}
+          <TabPanel value={value} index={3}>
+            <TournamentResultsPanel tournament_code={data.tournament.code} />
+          </TabPanel>
         </Paper>
       </Container>
     </>
