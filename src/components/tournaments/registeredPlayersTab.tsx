@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box } from "@mui/material";
+import { Backdrop, Box, CircularProgress } from "@mui/material";
 import {
   RegisteredPlayersSchema,
   RegistrationInfoSchema,
@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import PlayersTable from "@/components/tournaments/PlayersTable";
 import useSWR from "swr";
 import { tournamentRegisteredPlayersUrl } from "@/consts/api/urls";
-import { string } from "prop-types";
+import CenteredBox from "@/components/common/CenteredBox";
 
 interface Props {
   tournament_code: string;
@@ -41,17 +41,24 @@ const RegisteredPlayersPanel: React.FC<Props> = ({
           registered_players.length
         )
       : [];
-
   return (
     <>
       <Box sx={{ m: 1, p: 1 }}>
         <Typography variant={"h4"}>{t("registered_players_list")}</Typography>
-        <PlayersTable players={players_list} />
-        {waiting_list.length > 0 && (
-          <Box sx={{ paddingTop: 3 }}>
-            <Typography variant={"h4"}>{t("waiting_list")}</Typography>
-            <PlayersTable players={waiting_list} />
-          </Box>
+        {!data ? (
+          <CenteredBox>
+            <CircularProgress color="inherit" />
+          </CenteredBox>
+        ) : (
+          <>
+            <PlayersTable players={players_list} />
+            {waiting_list.length > 0 && (
+              <Box sx={{ paddingTop: 3 }}>
+                <Typography variant={"h4"}>{t("waiting_list")}</Typography>
+                <PlayersTable players={waiting_list} />
+              </Box>
+            )}
+          </>
         )}
       </Box>
     </>
