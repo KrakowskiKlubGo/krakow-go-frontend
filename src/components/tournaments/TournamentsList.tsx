@@ -4,23 +4,29 @@ import { List, ListItem } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { getLocalizedMonthDateString } from "@/utils/functions";
-import { useTranslation } from "next-i18next";
+import { useLanguageQuery, useSelectedLanguage } from "next-export-i18n";
+import * as querystring from "querystring";
 
 interface Props {
   tournaments: TournamentListSchema[];
 }
 
 const TournamentsList: React.FC<Props> = ({ tournaments }) => {
-  const { i18n } = useTranslation("common");
+  const { lang } = useSelectedLanguage();
+  const [query] = useLanguageQuery();
+  const queryString = querystring.stringify(query);
+
   return (
     <List>
       {tournaments.map((tournament: TournamentListSchema) => (
         <ListItem key={tournament.code}>
-          <ListItemButton href={`/tournaments/${tournament.code}`}>
+          <ListItemButton
+            href={`/tournaments/${tournament.code}?${queryString}`}
+          >
             <ListItemText
               primary={tournament.name}
               secondary={getLocalizedMonthDateString(
-                i18n.language,
+                lang,
                 tournament.start_date,
                 tournament.end_date
               )}

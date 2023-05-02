@@ -1,22 +1,10 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
 import Typography from "@mui/material/Typography";
 import { Paper } from "@mui/material";
 import CenteredBox from "@/components/common/CenteredBox";
+import { useTranslation } from "next-export-i18n";
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale ?? "pl", ["errors", "common"])),
-    },
-  };
-};
-
-export default function Custom500(
-  data: InferGetStaticPropsType<typeof getStaticProps>
-) {
-  const { t } = useTranslation("errors");
+export default function Custom500() {
+  const { t } = useTranslation();
   return (
     <CenteredBox sx={{ flexGrow: 1 }}>
       <Paper>
@@ -24,7 +12,7 @@ export default function Custom500(
           <Typography variant={"h2"}>500</Typography>
         </CenteredBox>
         <CenteredBox sx={{ padding: 2 }}>
-          <Typography> {t("500_text")}</Typography>
+          <Typography> {t("errors.500_text")}</Typography>
         </CenteredBox>
       </Paper>
     </CenteredBox>

@@ -16,20 +16,20 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ResultTable from "./ResultTable";
 import useSWR from "swr";
 import { tournamentResultsUrl } from "@/consts/api/urls";
-import { useTranslation } from "react-i18next";
 import CenteredBox from "@/components/common/CenteredBox";
+import { useSelectedLanguage } from "next-export-i18n";
 
 type Props = {
   tournament_code: string;
 };
 
 const TournamentResultsPanel: React.FC<Props> = ({ tournament_code }) => {
-  const { i18n } = useTranslation("registration");
+  const { lang } = useSelectedLanguage();
   const fetcher = (url: string) =>
     fetch(url, {
       headers: {
         "Content-Type": "application/json",
-        "Accept-Language": i18n.language,
+        "Accept-Language": lang,
       },
       method: "GET",
     }).then((r) => r.json());

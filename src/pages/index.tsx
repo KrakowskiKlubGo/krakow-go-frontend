@@ -6,8 +6,6 @@ import TournamentCard from "@/components/index/tournamentCard";
 import { MeetingListSchema } from "@/consts/meetings/types";
 import React from "react";
 import { getMeetingsList, getIncomingTournamentsList } from "@/api/api_methods";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
 import { Container, Paper, Stack } from "@mui/material";
 import CenteredBox from "@/components/common/CenteredBox";
 import MeetingCard from "@/components/index/meetingCard";
@@ -21,18 +19,22 @@ import Meeting3 from "../../public/images/meeting3.jpg";
 import Meeting4 from "../../public/images/meeting4.jpg";
 import Meeting5 from "../../public/images/meeting5.jpg";
 import GobanCut from "../../public/images/goban-cut.png";
+import { useSelectedLanguage, useTranslation } from "next-export-i18n";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const tournaments: TournamentListSchema[] = await getIncomingTournamentsList(
-    locale ?? "pl"
-  );
-  const meetings: MeetingListSchema[] = await getMeetingsList(locale ?? "pl");
+  const tournaments_pl: TournamentListSchema[] =
+    await getIncomingTournamentsList("pl");
+  const tournaments_en: TournamentListSchema[] =
+    await getIncomingTournamentsList("en");
+  const meetings_pl: MeetingListSchema[] = await getMeetingsList("pl");
+  const meetings_en: MeetingListSchema[] = await getMeetingsList("en");
 
   return {
     props: {
-      tournaments,
-      meetings,
-      ...(await serverSideTranslations(locale ?? "pl", ["common", "main"])),
+      tournaments_pl,
+      tournaments_en,
+      meetings_en,
+      meetings_pl,
     },
   };
 };
@@ -40,7 +42,11 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 export default function Home(
   data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
-  const { t } = useTranslation(["main"]);
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
+
+  const tournaments = lang === "pl" ? data.tournaments_pl : data.tournaments_en;
+  const meetings = lang === "pl" ? data.meetings_pl : data.meetings_en;
   return (
     <>
       <Box
@@ -61,32 +67,30 @@ export default function Home(
             </CenteredBox>
             <CenteredBox>
               <Stack direction={{ xs: "column", md: "row" }} spacing={5}>
-                {data.tournaments.length > 0 && (
+                {tournaments.length > 0 && (
                   <Stack spacing={1}>
                     <Paper elevation={2}>
                       <Typography variant={"h5"} padding={"1rem"}>
-                        {t("tournament")}
+                        {t("main.tournament")}
                       </Typography>
                     </Paper>
-                    {data.tournaments.map(
-                      (tournament: TournamentListSchema) => (
-                        <TournamentCard
-                          tournament={tournament}
-                          key={tournament.code}
-                        />
-                      )
-                    )}
+                    {tournaments.map((tournament: TournamentListSchema) => (
+                      <TournamentCard
+                        tournament={tournament}
+                        key={tournament.code}
+                      />
+                    ))}
                   </Stack>
                 )}
-                {data.meetings.length > 0 && (
+                {meetings.length > 0 && (
                   <Stack spacing={1}>
                     <Paper elevation={4}>
                       <Typography variant={"h5"} padding={"1rem"}>
-                        {t("meeting")}
+                        {t("main.meeting")}
                       </Typography>
                     </Paper>
 
-                    {data.meetings.map((meeting: MeetingListSchema) => (
+                    {meetings.map((meeting: MeetingListSchema) => (
                       <MeetingCard meeting={meeting} key={meeting.code} />
                     ))}
                   </Stack>
@@ -100,12 +104,12 @@ export default function Home(
       <Box className={styles.intro}>
         <Container>
           <Box display="flex" justifyContent="center" alignItems="center">
-            <Typography variant={"h4"}>{t("main_header")}</Typography>
+            <Typography variant={"h4"}>{t("main.main_header")}</Typography>
           </Box>
 
           <Box display="flex" justifyContent="center" alignItems="center">
             <Typography>
-              {t("text_1")} {t("text_2")}
+              {t("main.text_1")} {t("main.text_2")}
             </Typography>
           </Box>
           <CenteredBox>
@@ -118,34 +122,34 @@ export default function Home(
         <Paper>
           <ImageSection
             image={Meeting1}
-            header={t("map_header")}
-            description={t("map_description")}
+            header={t("main.map_header")}
+            description={t("main.map_description")}
             direction={"row-reverse"}
           />
 
           <ImageSection
             image={Meeting2}
-            header={t("section_1_header")}
-            description={t("section_1_text")}
+            header={t("main.section_1_header")}
+            description={t("main.section_1_text")}
           />
 
           <ImageSection
             image={Meeting3}
-            header={t("section_2_header")}
-            description={t("section_2_text")}
+            header={t("main.section_2_header")}
+            description={t("main.section_2_text")}
             direction={"row-reverse"}
           />
 
           <ImageSection
             image={Meeting4}
-            header={t("section_3_header")}
-            description={t("section_3_text")}
+            header={t("main.section_3_header")}
+            description={t("main.section_3_text")}
           />
 
           <ImageSection
             image={Meeting5}
-            header={t("section_4_header")}
-            description={t("section_4_text")}
+            header={t("main.section_4_header")}
+            description={t("main.section_4_text")}
             direction={"row-reverse"}
           />
         </Paper>

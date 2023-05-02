@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 
 import Typography from "@mui/material/Typography";
-import { Container, Paper, Tab, Tabs } from "@mui/material";
+import { Container, Paper } from "@mui/material";
 import React from "react";
 import {
   MeetingDetailSchema,
@@ -9,22 +9,17 @@ import {
 } from "@/consts/meetings/types";
 import { getMeetingDetails, getMeetingsList } from "@/api/api_methods";
 import { detailPageParams } from "@/consts/interfaces";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import CenteredBox from "@/components/common/CenteredBox";
 import { getLocalizedMonthDateString } from "@/utils/functions";
-import { useTranslation } from "next-i18next";
+import { useSelectedLanguage } from "next-export-i18n";
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const meetings: MeetingListSchema[] = await getMeetingsList("pl");
-  const validLocales = locales && Array.isArray(locales) ? locales : [];
 
   const paths = meetings.flatMap((meeting) => {
-    return validLocales.map((locale) => {
-      return {
-        params: { code: meeting.code },
-        locale: locale,
-      };
-    });
+    return {
+      params: { code: meeting.code },
+    };
   });
 
   return {
@@ -35,15 +30,13 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { code } = context.params as detailPageParams;
-  const meeting: MeetingDetailSchema = await getMeetingDetails(
-    code,
-    context.locale ?? "pl"
-  );
+  const meeting_pl: MeetingDetailSchema = await getMeetingDetails(code, "pl");
+  const meeting_en: MeetingDetailSchema = await getMeetingDetails(code, "en");
 
   return {
     props: {
-      meeting,
-      ...(await serverSideTranslations(context.locale ?? "pl", ["common"])),
+      meeting_pl,
+      meeting_en,
     },
   };
 };
@@ -51,31 +44,30 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function MeetingDetail(
   data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
-  const { i18n } = useTranslation("common");
+  const { lang } = useSelectedLanguage();
+  const meeting = lang === "pl" ? data.meeting_pl : data.meeting_en;
 
   return (
     <>
       <Container>
         <CenteredBox>
           <Paper sx={{ m: 3, p: 3 }}>
-            <Typography variant={"h5"}>{data.meeting.name}</Typography>
+            <Typography variant={"h5"}>{meeting.name}</Typography>
             <Typography variant={"body1"}>
-              {getLocalizedMonthDateString(i18n.language, data.meeting.date)}
+              {getLocalizedMonthDateString(lang, meeting.date)}
             </Typography>
 
             <Typography variant={"body1"} paddingBottom={"1rem"}>
-              {data.meeting.start_time}
-              {data.meeting.end_time !== null && (
-                <span> - {data.meeting.end_time}</span>
-              )}
+              {meeting.start_time}
+              {meeting.end_time !== null && <span> - {meeting.end_time}</span>}
             </Typography>
             <Typography variant={"body1"} paddingBottom={"2rem"}>
-              {data.meeting.description}
+              {meeting.description}
             </Typography>
 
-            <Typography variant={"h5"}>{data.meeting.address}</Typography>
+            <Typography variant={"h5"}>{meeting.address}</Typography>
             <iframe
-              src={data.meeting.address_map_link}
+              src={meeting.address_map_link}
               allowFullScreen={false}
               width={"100%"}
               height={300}

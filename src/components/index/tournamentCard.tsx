@@ -6,14 +6,23 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { getLocalizedMonthDateString } from "@/utils/functions";
 import { TournamentListSchema } from "@/consts/tournamens/types";
-import { useTranslation } from "next-i18next";
+import {
+  useLanguageQuery,
+  useSelectedLanguage,
+  useTranslation,
+} from "next-export-i18n";
+import querystring from "querystring";
 
 interface Props {
   tournament: TournamentListSchema;
 }
 
 const TournamentCard: React.FC<Props> = ({ tournament }) => {
-  const { i18n, t } = useTranslation("common");
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
+  const [query] = useLanguageQuery();
+  const queryString = querystring.stringify(query);
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -21,15 +30,18 @@ const TournamentCard: React.FC<Props> = ({ tournament }) => {
         <br></br>
         <Typography variant="body1">
           {getLocalizedMonthDateString(
-            i18n.language,
+            lang,
             tournament.start_date,
             tournament.end_date
           )}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" href={`/tournaments/${tournament.code}`}>
-          {t("details_button_text")}
+        <Button
+          variant="contained"
+          href={`/tournaments/${tournament.code}/?${queryString}`}
+        >
+          {t("common.details_button_text")}
         </Button>
       </CardActions>
     </Card>

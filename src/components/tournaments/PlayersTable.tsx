@@ -1,7 +1,7 @@
 import * as React from "react";
 import { RegisteredPlayersSchema } from "@/consts/tournamens/types";
-import { useTranslation } from "next-i18next";
 import { DataGrid, GridComparatorFn } from "@mui/x-data-grid";
+import { useTranslation } from "next-export-i18n";
 
 interface Props {
   players: RegisteredPlayersSchema[];
@@ -57,25 +57,40 @@ const playerRankComparator: GridComparatorFn<string> = (rank1, rank2) => {
 };
 
 const PlayersTable: React.FC<Props> = ({ players }) => {
-  const { t } = useTranslation("registration");
+  const { t } = useTranslation();
   const columns = [
     {
       field: "id",
-      headerName: t("order"),
+      headerName: t("registration.order"),
       flex: 1,
       minWidth: 100,
       maxWidth: 50,
     },
-    { field: "name", headerName: t("name"), flex: 3, minWidth: 200 },
+    {
+      field: "name",
+      headerName: t("registration.name"),
+      flex: 3,
+      minWidth: 200,
+    },
     {
       field: "rank",
-      headerName: t("rank"),
+      headerName: t("registration.rank"),
       flex: 2,
       minWidth: 60,
       sortComparator: playerRankComparator,
     },
-    { field: "country", headerName: t("country"), flex: 2, minWidth: 100 },
-    { field: "city_club", headerName: t("club_city"), flex: 3, minWidth: 100 },
+    {
+      field: "country",
+      headerName: t("registration.country"),
+      flex: 2,
+      minWidth: 100,
+    },
+    {
+      field: "city_club",
+      headerName: t("registration.club_city"),
+      flex: 3,
+      minWidth: 100,
+    },
   ];
   const rows = players.map((player, index) => ({
     id: index + 1,

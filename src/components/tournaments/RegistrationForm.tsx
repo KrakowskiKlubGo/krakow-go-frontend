@@ -24,9 +24,9 @@ import { useState } from "react";
 import useSWR from "swr";
 import { captchaUrl } from "@/consts/api/urls";
 import { CaptchaImage } from "@/components/common/CaptchaImage";
-import { useTranslation } from "next-i18next";
 import EgdLastNameAutocomplete from "@/components/tournaments/EgdLastNameAutocomplete";
 import Typography from "@mui/material/Typography";
+import { useSelectedLanguage, useTranslation } from "next-export-i18n";
 
 interface Props {
   registration_info: RegistrationInfoSchema;
@@ -48,7 +48,8 @@ const RegistrationForm: React.FC<Props> = ({
   const [egfPidText, setEgfPidText] = useState("");
 
   const { data } = useSWR<CaptchaSchema>(captchaUrl, captchaFetcher);
-  const { t, i18n } = useTranslation("registration");
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
     tournament_code: string
@@ -74,7 +75,7 @@ const RegistrationForm: React.FC<Props> = ({
       const response_message = await registerPlayer(
         tournament_code,
         post_data,
-        i18n.language
+        lang
       );
       setMessage(response_message);
     } else {
@@ -106,7 +107,7 @@ const RegistrationForm: React.FC<Props> = ({
               <FormControl>
                 <CenteredBox>
                   <EgdLastNameAutocomplete
-                    label={t("last_name")}
+                    label={t("registration.last_name")}
                     id={"last_name"}
                     setFirstName={setFirstNameText}
                     setRank={setRankText}
@@ -119,7 +120,7 @@ const RegistrationForm: React.FC<Props> = ({
                   <TextField
                     required
                     id="first_name"
-                    label={t("first_name")}
+                    label={t("registration.first_name")}
                     defaultValue=""
                     value={firstNameText}
                     onChange={(event) => setFirstNameText(event.target.value)}
@@ -131,7 +132,7 @@ const RegistrationForm: React.FC<Props> = ({
                     required
                     select
                     id="rank"
-                    label={t("rank")}
+                    label={t("registration.rank")}
                     defaultValue="1k"
                     value={rankText}
                     onChange={(event) => setRankText(event.target.value)}
@@ -150,7 +151,7 @@ const RegistrationForm: React.FC<Props> = ({
                   <TextField
                     required
                     id="city_club"
-                    label={t("club_city")}
+                    label={t("registration.club_city")}
                     defaultValue=""
                     value={cityClubText}
                     onChange={(event) => setCityClubText(event.target.value)}
@@ -160,7 +161,7 @@ const RegistrationForm: React.FC<Props> = ({
                   <TextField
                     required
                     id="country"
-                    label={t("country")}
+                    label={t("registration.country")}
                     defaultValue=""
                     value={countryText}
                     onChange={(event) => setCountryText(event.target.value)}
@@ -178,7 +179,7 @@ const RegistrationForm: React.FC<Props> = ({
                 <CenteredBox>
                   <TextField
                     id="email"
-                    label={t("email")}
+                    label={t("registration.email")}
                     defaultValue=""
                     type={"email"}
                   />{" "}
@@ -186,7 +187,7 @@ const RegistrationForm: React.FC<Props> = ({
                 <CenteredBox>
                   <TextField
                     id="phone"
-                    label={t("phone")}
+                    label={t("registration.phone")}
                     defaultValue=""
                     type={"tel"}
                   />{" "}
@@ -213,7 +214,7 @@ const RegistrationForm: React.FC<Props> = ({
                   </Stack>
                 </CenteredBox>
                 <Button type="submit" variant={"contained"}>
-                  {t("register_button_text")}
+                  {t("registration.register_button_text")}
                 </Button>
                 <Backdrop open={loading}>
                   <CircularProgress color="inherit" />

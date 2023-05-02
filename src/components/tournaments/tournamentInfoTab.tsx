@@ -1,13 +1,6 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import {
-  Avatar,
-  Container,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-} from "@mui/material";
+import { List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 
 import {
   TournamentInfoDetailListFields,
@@ -15,14 +8,15 @@ import {
 } from "@/consts/tournamens/types";
 import Box from "@mui/material/Box";
 import FiberManualRecordSharpIcon from "@mui/icons-material/FiberManualRecordSharp";
-import { useTranslation } from "next-i18next";
 import { getLocalizedDayOfWeekString } from "@/utils/functions";
+import { useSelectedLanguage, useTranslation } from "next-export-i18n";
 interface Props {
   tournament_info: TournamentInfoSchema;
 }
 
 const TournamentInfoPanel: React.FC<Props> = ({ tournament_info }) => {
-  const { t, i18n } = useTranslation("tournaments");
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const schedule_activities_dates = new Set(
     tournament_info.scheduled_activities.map((activity) => activity.date)
   );
@@ -51,24 +45,32 @@ const TournamentInfoPanel: React.FC<Props> = ({ tournament_info }) => {
       </Box>
 
       <Box sx={{ m: 3, p: 1 }}>
-        <Typography variant={"h5"}>{t("details_header")}</Typography>
+        <Typography variant={"h5"}>
+          {t("tournaments.details_header")}
+        </Typography>
         <List>
           {info_items.map((item) => (
-            <ListItem key={item}>
-              <ListItemText
-                sx={{ whiteSpace: "pre-wrap" }}
-                primary={t(item)}
-                secondary={tournament_info[item]}
-                primaryTypographyProps={{ variant: "h6" }}
-                secondaryTypographyProps={{ variant: "body1" }}
-              />
-            </ListItem>
+            <>
+              {tournament_info[item] != null && (
+                <ListItem key={item}>
+                  <ListItemText
+                    sx={{ whiteSpace: "pre-wrap" }}
+                    primary={t("tournaments." + item)}
+                    secondary={tournament_info[item]}
+                    primaryTypographyProps={{ variant: "h6" }}
+                    secondaryTypographyProps={{ variant: "body1" }}
+                  />
+                </ListItem>
+              )}
+            </>
           ))}
         </List>
       </Box>
 
       <Box sx={{ m: 3, p: 3 }}>
-        <Typography variant={"h5"}>{t("address_header")}</Typography>
+        <Typography variant={"h5"}>
+          {t("tournaments.address_header")}
+        </Typography>
         <List>
           <ListItem>
             <Typography variant={"body1"} sx={{ whiteSpace: "pre-wrap" }}>
@@ -91,13 +93,15 @@ const TournamentInfoPanel: React.FC<Props> = ({ tournament_info }) => {
       </Box>
 
       <Box sx={{ m: 3, p: 3 }}>
-        <Typography variant={"h5"}>{t("schedule_header")}</Typography>
+        <Typography variant={"h5"}>
+          {t("tournaments.schedule_header")}
+        </Typography>
         <List>
           {Array.from(schedule_activities_dates).map((date, index) => {
             return (
               <>
                 <Typography>
-                  {getLocalizedDayOfWeekString(i18n.language, date)}
+                  {getLocalizedDayOfWeekString(lang, date)}
                 </Typography>
                 <List>
                   {tournament_info.scheduled_activities.map((activity) => {

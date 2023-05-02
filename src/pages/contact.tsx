@@ -1,6 +1,3 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
 import Typography from "@mui/material/Typography";
 import {
   Box,
@@ -17,28 +14,19 @@ import Discord from "public/images/discord-icon.png";
 
 import * as React from "react";
 import Image from "next/image";
+import { useTranslation } from "next-export-i18n";
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale ?? "pl", ["common", "contact"])),
-    },
-  };
-};
-
-export default function Contact(
-  data: InferGetStaticPropsType<typeof getStaticProps>
-) {
-  const { t } = useTranslation("contact");
+export default function Contact() {
+  const { t } = useTranslation();
   return (
     <Container maxWidth="sm">
       <Paper>
         <Box sx={{ mt: 8, p: 2 }}>
           <Typography variant="h4" gutterBottom>
-            {t("header")}
+            {t("contact.header")}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            {t("links_text")}
+            {t("contact.links_text")}
           </Typography>
           <List>
             <ListItem>

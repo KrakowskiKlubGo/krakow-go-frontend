@@ -1,15 +1,15 @@
 import * as React from "react";
-import { Backdrop, Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import {
   RegisteredPlayersSchema,
   RegistrationInfoSchema,
 } from "@/consts/tournamens/types";
-import { useTranslation } from "next-i18next";
 import Typography from "@mui/material/Typography";
 import PlayersTable from "@/components/tournaments/PlayersTable";
 import useSWR from "swr";
 import { tournamentRegisteredPlayersUrl } from "@/consts/api/urls";
 import CenteredBox from "@/components/common/CenteredBox";
+import { useTranslation } from "next-export-i18n";
 
 interface Props {
   tournament_code: string;
@@ -26,7 +26,7 @@ const RegisteredPlayersPanel: React.FC<Props> = ({
     fetcher
   );
   const registered_players = data ?? [];
-  const { t } = useTranslation("registration");
+  const { t } = useTranslation();
   const players_list =
     registration_info.player_limit != null
       ? registered_players.slice(
@@ -44,7 +44,9 @@ const RegisteredPlayersPanel: React.FC<Props> = ({
   return (
     <>
       <Box sx={{ m: 1, p: 1 }}>
-        <Typography variant={"h4"}>{t("registered_players_list")}</Typography>
+        <Typography variant={"h4"}>
+          {t("registration.registered_players_list")}
+        </Typography>
         {!data ? (
           <CenteredBox>
             <CircularProgress color="inherit" />
@@ -54,7 +56,9 @@ const RegisteredPlayersPanel: React.FC<Props> = ({
             <PlayersTable players={players_list} />
             {waiting_list.length > 0 && (
               <Box sx={{ paddingTop: 3 }}>
-                <Typography variant={"h4"}>{t("waiting_list")}</Typography>
+                <Typography variant={"h4"}>
+                  {t("registration.waiting_list")}
+                </Typography>
                 <PlayersTable players={waiting_list} />
               </Box>
             )}

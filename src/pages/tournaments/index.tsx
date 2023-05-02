@@ -6,26 +6,29 @@ import {
   getIncomingTournamentsList,
 } from "@/api/api_methods";
 import { TournamentListSchema } from "@/consts/tournamens/types";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import * as React from "react";
-import { useTranslation } from "next-i18next";
 import TournamentsList from "@/components/tournaments/TournamentsList";
+import { useSelectedLanguage, useTranslation } from "next-export-i18n";
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const ended_tournaments: TournamentListSchema[] =
-    await getEndedTournamentsList(context.locale ?? "pl");
+  const ended_tournaments_pl: TournamentListSchema[] =
+    await getEndedTournamentsList("pl");
 
-  const incoming_tournaments: TournamentListSchema[] =
-    await getIncomingTournamentsList(context.locale ?? "pl");
+  const incoming_tournaments_pl: TournamentListSchema[] =
+    await getIncomingTournamentsList("pl");
+
+  const ended_tournaments_en: TournamentListSchema[] =
+    await getEndedTournamentsList("en");
+
+  const incoming_tournaments_en: TournamentListSchema[] =
+    await getIncomingTournamentsList("en");
 
   return {
     props: {
-      ended_tournaments,
-      incoming_tournaments,
-      ...(await serverSideTranslations(context.locale ?? "pl", [
-        "common",
-        "tournaments",
-      ])),
+      ended_tournaments_pl,
+      incoming_tournaments_pl,
+      ended_tournaments_en,
+      incoming_tournaments_en,
     },
   };
 };
@@ -33,9 +36,17 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function Tournaments(
   data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
-  const incoming_tournaments_available = data.incoming_tournaments.length > 0;
-  const ended_tournaments_available = data.ended_tournaments.length > 0;
-  const { t } = useTranslation("tournaments");
+  const incoming_tournaments_available =
+    data.incoming_tournaments_pl.length > 0;
+  const ended_tournaments_available = data.ended_tournaments_pl.length > 0;
+
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
+  const incoming_tournaments =
+    lang === "pl" ? data.incoming_tournaments_pl : data.incoming_tournaments_en;
+  const ended_tournaments =
+    lang === "pl" ? data.ended_tournaments_pl : data.ended_tournaments_en;
+
   return (
     <Container>
       <Box>
@@ -43,17 +54,17 @@ export default function Tournaments(
           {incoming_tournaments_available && (
             <Box padding={2}>
               <Typography variant={"h4"}>
-                {t("incoming_tournaments_header")}
+                {t("tournaments.incoming_tournaments_header")}
               </Typography>
-              <TournamentsList tournaments={data.incoming_tournaments} />
+              <TournamentsList tournaments={incoming_tournaments} />
             </Box>
           )}
           {ended_tournaments_available && (
             <Box padding={2}>
               <Typography variant={"h4"}>
-                {t("ended_tournaments_header")}
+                {t("tournaments.ended_tournaments_header")}
               </Typography>
-              <TournamentsList tournaments={data.ended_tournaments} />
+              <TournamentsList tournaments={ended_tournaments} />
             </Box>
           )}
         </Paper>

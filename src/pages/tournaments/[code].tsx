@@ -1,10 +1,4 @@
-import {
-  GetServerSideProps,
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetServerSidePropsType,
-  InferGetStaticPropsType,
-} from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Box from "@mui/material/Box";
 
 import { Container, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
@@ -17,25 +11,20 @@ import {
   TournamentListSchema,
 } from "@/consts/tournamens/types";
 import { GetTournamentDetails, getAllTournamentsList } from "@/api/api_methods";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
 import CenteredBox from "@/components/common/CenteredBox";
 import Image from "next/image";
 import TournamentResultsPanel from "@/components/tournaments/TournamentResultsPanel";
 import { getLocalizedMonthDateString } from "@/utils/functions";
 import { detailPageParams } from "@/consts/interfaces";
+import { useSelectedLanguage, useTranslation } from "next-export-i18n";
 
-export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const tournaments: TournamentListSchema[] = await getAllTournamentsList("pl");
-  const validLocales = locales && Array.isArray(locales) ? locales : [];
 
   const paths = tournaments.flatMap((tournament) => {
-    return validLocales.map((locale) => {
-      return {
-        params: { code: tournament.code },
-        locale: locale,
-      };
-    });
+    return {
+      params: { code: tournament.code },
+    };
   });
 
   return {
@@ -47,19 +36,19 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { code } = context.params as detailPageParams;
 
-  const tournament: TournamentDetailSchema[] = await GetTournamentDetails(
+  const tournament_pl: TournamentDetailSchema[] = await GetTournamentDetails(
     code,
-    context.locale ?? "pl"
+    "pl"
+  );
+  const tournament_en: TournamentDetailSchema[] = await GetTournamentDetails(
+    code,
+    "en"
   );
 
   return {
     props: {
-      tournament,
-      ...(await serverSideTranslations(context.locale ?? "pl", [
-        "common",
-        "registration",
-        "tournaments",
-      ])),
+      tournament_pl,
+      tournament_en,
     },
   };
 };
@@ -97,14 +86,16 @@ export default function TournamentDetail(
   data: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const [value, setValue] = React.useState(0);
+  const { lang } = useSelectedLanguage();
+  const tournament = lang === "pl" ? data.tournament_pl : data.tournament_en;
   const registration_enable =
-    data.tournament.registration_info.end_date != null
-      ? new Date(data.tournament.registration_info.end_date) > new Date()
+    tournament.registration_info.end_date != null
+      ? new Date(tournament.registration_info.end_date) > new Date()
       : true;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  const { t, i18n } = useTranslation(["tournaments", "registration"]);
+  const { t } = useTranslation();
   return (
     <>
       <Container>
@@ -115,21 +106,16 @@ export default function TournamentDetail(
             sx={{ p: 3 }}
           >
             <Box>
-              <Image
-                alt=""
-                src={data.tournament.image}
-                width={300}
-                height={269}
-              />
+              <Image alt="" src={tournament.image} width={300} height={269} />
             </Box>
 
             <Box>
-              <Typography variant={"h3"}>{data.tournament.name}</Typography>
+              <Typography variant={"h3"}>{tournament.name}</Typography>
               <Typography variant={"h4"}>
                 {getLocalizedMonthDateString(
-                  i18n.language,
-                  data.tournament.start_date,
-                  data.tournament.end_date
+                  lang,
+                  tournament.start_date,
+                  tournament.end_date
                 )}
               </Typography>
             </Box>
@@ -143,40 +129,40 @@ export default function TournamentDetail(
               scrollButtons
               allowScrollButtonsMobile
             >
-              <Tab label={t("info_tab")} {...a11yProps(0)} />
+              <Tab label={t("tournaments.info_tab")} {...a11yProps(0)} />
               <Tab
-                label={t("registration_tab")}
+                label={t("tournaments.registration_tab")}
                 {...a11yProps(1)}
                 disabled={!registration_enable}
               />
-              <Tab label={t("registered_players_tab")} {...a11yProps(2)} />
-              <Tab label={t("results_tab")} {...a11yProps(2)} />
+              <Tab
+                label={t("tournaments.registered_players_tab")}
+                {...a11yProps(2)}
+              />
+              <Tab label={t("tournaments.results_tab")} {...a11yProps(2)} />
             </Tabs>
           </CenteredBox>
 
           <TabPanel value={value} index={0}>
-            <TournamentInfoPanel
-              tournament_info={data.tournament.tournament_info}
-            />
+            <TournamentInfoPanel tournament_info={tournament.tournament_info} />
           </TabPanel>
-
           {registration_enable && (
             <TabPanel value={value} index={1}>
               <RegistrationForm
-                registration_info={data.tournament.registration_info}
-                tournament_code={data.tournament.code}
+                registration_info={tournament.registration_info}
+                tournament_code={tournament.code}
               />
             </TabPanel>
           )}
           <TabPanel value={value} index={2}>
             <RegisteredPlayersPanel
-              tournament_code={data.tournament.code}
-              registration_info={data.tournament.registration_info}
+              tournament_code={tournament.code}
+              registration_info={tournament.registration_info}
             />
           </TabPanel>
 
           <TabPanel value={value} index={3}>
-            <TournamentResultsPanel tournament_code={data.tournament.code} />
+            <TournamentResultsPanel tournament_code={tournament.code} />
           </TabPanel>
         </Paper>
       </Container>

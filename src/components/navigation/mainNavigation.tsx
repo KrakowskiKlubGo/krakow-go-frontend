@@ -13,15 +13,21 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import NextLink from "next/link";
-import { Link } from "@mui/material";
-import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import pl_icon from "public/pl.svg";
 import en_icon from "public/en.svg";
 import CenteredBox from "@/components/common/CenteredBox";
 import { styled } from "@mui/system";
+import MuiLink from "@mui/material/Link";
+import {
+  LanguageSwitcher,
+  useLanguageQuery,
+  useSelectedLanguage,
+  useTranslation,
+} from "next-export-i18n";
+import Link from "next/link";
+import querystring from "querystring";
 
 interface Props {
   /**
@@ -35,7 +41,10 @@ interface Props {
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const MainAppBar: React.FC<Props> = (props) => {
-  const { i18n, t } = useTranslation("common");
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
+  const [query] = useLanguageQuery();
+  const queryString = querystring.stringify(query);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const router = useRouter();
@@ -50,33 +59,32 @@ const MainAppBar: React.FC<Props> = (props) => {
   };
 
   const links: MenuLink[] = [
-    { href: "/", label: t("home") },
-    { href: "/tournaments", label: t("tournaments") },
-    { href: "/contact", label: t("contact") },
+    { href: "/", label: t("common.home") },
+    { href: "/tournaments", label: t("common.tournaments") },
+    { href: "/contact", label: t("common.contact") },
   ];
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        {t("title")}
-      </Typography>
+      <MuiLink href={`/${queryString}`}>
+        <Typography variant="h6" sx={{ my: 2 }}>
+          {t("common.title")}
+        </Typography>
+      </MuiLink>
+
       <Divider />
       <List>
         {links.map(({ href, label }, index) => (
           <ListItem key={index}>
-            <ListItemButton href={href}>
+            <ListItemButton href={href + `?${queryString}`}>
               <ListItemText secondary={label} />
             </ListItemButton>
           </ListItem>
         ))}
         <ListItem>
-          <Link
-            href={router.asPath}
-            locale={i18n.language === "pl" ? "en" : false}
-            component={NextLink}
-          >
+          <Link href={{ pathname: router.asPath, query: query }}>
             <ListItemButton>
-              {i18n.language === "pl" ? (
+              {lang === "pl" ? (
                 <CenteredBox>
                   <Image
                     src={en_icon}
@@ -125,24 +133,22 @@ const MainAppBar: React.FC<Props> = (props) => {
               component="div"
               sx={{ display: { xs: "block", sm: "block" } }}
             >
-              {t("title")}
+              {t("common.title")}
             </Typography>
             <Box sx={{ display: { xs: "none", sm: "block" }, margin: "auto" }}>
               {links.map(({ href, label }, index) => (
-                <Button key={index} href={href} size={"large"}>
-                  <Typography color={"white"}>{label}</Typography>
-                </Button>
+                <Link href={{ pathname: href, query: query }} key={index}>
+                  <Button size={"large"}>
+                    <Typography color={"white"}>{label}</Typography>
+                  </Button>
+                </Link>
               ))}
             </Box>
 
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              <Link
-                href={router.asPath}
-                locale={i18n.language === "pl" ? "en" : false}
-                component={NextLink}
-              >
+              <LanguageSwitcher lang={lang === "pl" ? "en" : "pl"}>
                 <Button>
-                  {i18n.language === "pl" ? (
+                  {lang === "pl" ? (
                     <CenteredBox>
                       <Image
                         src={en_icon}
@@ -162,7 +168,7 @@ const MainAppBar: React.FC<Props> = (props) => {
                     </CenteredBox>
                   )}
                 </Button>
-              </Link>
+              </LanguageSwitcher>
             </Box>
           </Toolbar>
         </AppBar>

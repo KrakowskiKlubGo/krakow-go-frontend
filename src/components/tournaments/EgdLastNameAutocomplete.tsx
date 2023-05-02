@@ -3,9 +3,9 @@ import { Autocomplete, Stack, TextField } from "@mui/material";
 import { EgdPlayerDataSchema } from "@/consts/tournamens/types";
 import { EgdGetPlayerDataByDataUrl } from "@/consts/api/urls";
 import Typography from "@mui/material/Typography";
-import { useTranslation } from "next-i18next";
 import HelpEgdRegistrationPopover from "@/components/tournaments/helpEgdRegistrationPopover";
 import { ReactNode } from "react";
+import { useTranslation } from "next-export-i18n";
 
 interface Props {
   label: string;
@@ -25,7 +25,7 @@ const EgdLastNameAutocomplete: React.FC<Props> = (props) => {
     []
   );
 
-  const { t } = useTranslation("registration");
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -59,9 +59,11 @@ const EgdLastNameAutocomplete: React.FC<Props> = (props) => {
   const helper: ReactNode = (
     <Stack direction={"row"}>
       <Typography variant="body2" color="text.secondary">
-        {t("autocomplete_help_text")}
+        {t("registration.autocomplete_help_text")}
       </Typography>
-      <HelpEgdRegistrationPopover help_text={t("autocomplete_help_popover")} />
+      <HelpEgdRegistrationPopover
+        help_text={t("registration.autocomplete_help_popover")}
+      />
     </Stack>
   );
 
