@@ -87,7 +87,6 @@ const RegistrationForm: React.FC<Props> = ({
 
   const handleClose = () => {
     setResponse(false);
-    window.location.reload();
   };
 
   return (
