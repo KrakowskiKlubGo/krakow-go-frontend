@@ -75,7 +75,8 @@
     "additional_info": "Additional info",
     "contact": "Contact",
     "incoming_tournaments_header": "Incoming tournaments",
-    "ended_tournaments_header": "Ended tournaments"
+    "ended_tournaments_header": "Ended tournaments",
+    "results_not_available": "Results not available yet"
   },
   "registration": {
     "name": "Name",

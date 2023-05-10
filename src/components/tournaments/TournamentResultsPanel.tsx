@@ -1,7 +1,4 @@
-import {
-  RegisteredPlayersSchema,
-  TournamentResultSchema,
-} from "@/consts/tournamens/types";
+import { TournamentResultSchema } from "@/consts/tournamens/types";
 import * as React from "react";
 import {
   Accordion,
@@ -17,7 +14,7 @@ import ResultTable from "./ResultTable";
 import useSWR from "swr";
 import { tournamentResultsUrl } from "@/consts/api/urls";
 import CenteredBox from "@/components/common/CenteredBox";
-import { useSelectedLanguage } from "next-export-i18n";
+import { useSelectedLanguage, useTranslation } from "next-export-i18n";
 
 type Props = {
   tournament_code: string;
@@ -25,6 +22,7 @@ type Props = {
 
 const TournamentResultsPanel: React.FC<Props> = ({ tournament_code }) => {
   const { lang } = useSelectedLanguage();
+  const { t } = useTranslation();
   const fetcher = (url: string) =>
     fetch(url, {
       headers: {
@@ -48,20 +46,32 @@ const TournamentResultsPanel: React.FC<Props> = ({ tournament_code }) => {
           </CenteredBox>
         ) : (
           <>
-            {results.map((result, index) => (
-              <Accordion key={index} defaultExpanded={index === 0}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel-content"
-                  id="panel-header"
-                >
-                  <Typography>{result.name}</Typography>
-                </AccordionSummary>
-                <TableContainer component={Paper}>
-                  <ResultTable result={result} id={"go-result-" + index} />
-                </TableContainer>
-              </Accordion>
-            ))}
+            {results.length > 0 ? (
+              <>
+                {results.map((result, index) => (
+                  <Accordion key={index} defaultExpanded={index === 0}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel-content"
+                      id="panel-header"
+                    >
+                      <Typography>{result.name}</Typography>
+                    </AccordionSummary>
+                    <TableContainer component={Paper}>
+                      <ResultTable result={result} id={"go-result-" + index} />
+                    </TableContainer>
+                  </Accordion>
+                ))}
+              </>
+            ) : (
+              <Paper>
+                <CenteredBox>
+                  <Typography variant={"h4"}>
+                    {t("tournaments.results_not_available")}
+                  </Typography>
+                </CenteredBox>
+              </Paper>
+            )}
           </>
         )}
       </Box>

@@ -77,7 +77,8 @@
     "additional_info": "Dodatkowe informacje",
     "contact": "Kontakt",
     "incoming_tournaments_header": "Nadchodzące turnieje",
-    "ended_tournaments_header": "Zakończone turnieje"
+    "ended_tournaments_header": "Zakończone turnieje",
+    "results_not_available": "Wyniki nie są jeszcze dostępne"
   },
   "registration": {
     "name": "Imię i nazwisko",
