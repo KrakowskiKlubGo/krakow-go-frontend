@@ -26,6 +26,7 @@ const MyApp = (props: MyAppProps) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta property="og:image" content="/images/dragon_small.png" />
         <title>Krakowski Klub Go</title>
         <meta
           name="description"
