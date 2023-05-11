@@ -76,14 +76,16 @@ const MainAppBar: React.FC<Props> = (props) => {
       <List>
         {links.map(({ href, label }, index) => (
           <ListItem key={index}>
-            <ListItemButton href={href + `?${queryString}`}>
-              <ListItemText secondary={label} />
-            </ListItemButton>
+            <Link href={{ pathname: href, query: query }} key={index}>
+              <Button size={"large"}>
+                <Typography color={"white"}>{label}</Typography>
+              </Button>
+            </Link>
           </ListItem>
         ))}
         <ListItem>
-          <Link href={{ pathname: router.asPath, query: query }}>
-            <ListItemButton>
+          <LanguageSwitcher lang={lang === "pl" ? "en" : "pl"}>
+            <Button>
               {lang === "pl" ? (
                 <CenteredBox>
                   <Image
@@ -103,8 +105,8 @@ const MainAppBar: React.FC<Props> = (props) => {
                   ></Image>
                 </CenteredBox>
               )}
-            </ListItemButton>
-          </Link>
+            </Button>
+          </LanguageSwitcher>
         </ListItem>
       </List>
     </Box>
