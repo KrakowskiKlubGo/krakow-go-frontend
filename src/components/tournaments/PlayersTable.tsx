@@ -1,7 +1,9 @@
 import * as React from "react";
 import { RegisteredPlayersSchema } from "@/consts/tournamens/types";
-import { DataGrid, GridComparatorFn } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, GridComparatorFn } from "@mui/x-data-grid";
 import { useTranslation } from "next-export-i18n";
+import { Link } from "@mui/material";
+import { GridValidRowModel } from "@mui/x-data-grid/models/gridRows";
 
 interface Props {
   players: RegisteredPlayersSchema[];
@@ -76,7 +78,7 @@ const PlayersTable: React.FC<Props> = ({ players }) => {
       field: "rank",
       headerName: t("registration.rank"),
       flex: 2,
-      minWidth: 60,
+      minWidth: 70,
       sortComparator: playerRankComparator,
     },
     {
@@ -91,6 +93,27 @@ const PlayersTable: React.FC<Props> = ({ players }) => {
       flex: 3,
       minWidth: 100,
     },
+    {
+      field: "pid",
+      headerName: "PID",
+      flex: 3,
+      minWidth: 100,
+      renderCell: (params: GridCellParams<GridValidRowModel, string>) => (
+        <span>
+          {params.value != undefined ? (
+            <Link
+              href={`https://www.europeangodatabase.eu/EGD/Player_Card.php?&key=${params.value}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {params.value}
+            </Link>
+          ) : (
+            "-"
+          )}
+        </span>
+      ),
+    },
   ];
   const rows = players.map((player, index) => ({
     id: index + 1,
@@ -98,6 +121,7 @@ const PlayersTable: React.FC<Props> = ({ players }) => {
     rank: player.rank,
     country: player.country,
     city_club: player.city_club,
+    pid: player.egf_pid,
   }));
 
   return (
