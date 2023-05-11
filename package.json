@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next build && next export",
+    "export-prod": "NODE_ENV=production next build && next export",
+    "export-local": "NODE_ENV=test next build && next export"
   },
   "dependencies": {
     "@emotion/cache": "latest",

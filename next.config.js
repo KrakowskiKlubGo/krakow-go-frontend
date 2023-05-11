@@ -2,7 +2,7 @@
 
 const exportConfig = {
   reactStrictMode: true,
-  assetPrefix: "https://krakow.go.art.pl",
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH,
   output: "export",
   trailingSlash: true,
   images: {
@@ -32,8 +32,8 @@ const devConfig = {
   },
 };
 
-if (process.env.NODE_ENV === "production") {
-  module.exports = exportConfig;
-} else {
+if (process.env.NODE_ENV === "development") {
   module.exports = devConfig;
+} else {
+  module.exports = exportConfig;
 }
