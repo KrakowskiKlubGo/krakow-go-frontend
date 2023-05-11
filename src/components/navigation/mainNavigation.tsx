@@ -66,11 +66,9 @@ const MainAppBar: React.FC<Props> = (props) => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <MuiLink href={`/${queryString}`}>
-        <Typography variant="h6" sx={{ my: 2 }}>
-          {t("common.title")}
-        </Typography>
-      </MuiLink>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        {t("common.title")}
+      </Typography>
 
       <Divider />
       <List>
