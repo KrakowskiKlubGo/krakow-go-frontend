@@ -219,7 +219,7 @@ const RegistrationForm: React.FC<Props> = ({
                   <CircularProgress color="inherit" />
                 </Backdrop>
                 <Dialog open={response} onClose={handleClose}>
-                  <DialogTitle>Success!</DialogTitle>
+                  <DialogTitle></DialogTitle>
                   <DialogContent>{message}</DialogContent>
                   <DialogActions>
                     <Button onClick={handleClose} color="primary">

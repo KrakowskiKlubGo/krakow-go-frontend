@@ -90,7 +90,7 @@ export default function TournamentDetail(
   const tournament = lang === "pl" ? data.tournament_pl : data.tournament_en;
   const registration_enable =
     tournament.registration_info.end_date != null
-      ? new Date(tournament.registration_info.end_date) > new Date()
+      ? new Date(tournament.registration_info.end_date) >= new Date()
       : true;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
