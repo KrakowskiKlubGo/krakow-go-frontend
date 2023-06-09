@@ -1,4 +1,6 @@
 import {
+  articleDetailUrl,
+  articleListUrl,
   EgdGetPlayerDataByDataUrl,
   EndedTournamentsListUrl,
   IncomingTournamentsListUrl,
@@ -8,9 +10,11 @@ import {
   tournamentRegistrationUrl,
   tournamentsListUrl,
 } from "@/consts/api/urls";
-import { EgdPlayerDataSchema } from "@/consts/tournamens/types";
 
-export const getDataFromBackend = async (api_url: string, locale: string) => {
+export const getDataFromBackend = async (
+  api_url: string,
+  locale: string = ""
+) => {
   try {
     const response = await fetch(api_url, {
       headers: {
@@ -63,6 +67,14 @@ export const getMeetingsList = async (locale: string) => {
 
 export const getMeetingDetails = async (code: string, locale: string) => {
   return getDataFromBackend(meetingDetailUrl(code), locale);
+};
+
+export const getArticlesList = async () => {
+  return getDataFromBackend(articleListUrl);
+};
+
+export const getArticleDetails = async (code: string, locale: string) => {
+  return getDataFromBackend(articleDetailUrl(code), locale);
 };
 
 export const getAllTournamentsList = async (locale: string) => {

@@ -19,6 +19,10 @@ export const meetingsListUrl = `${apiBaseUrl}/meetings/`;
 export const meetingDetailUrl = (code: string) =>
   `${apiBaseUrl}/meetings/${code}/`;
 
+export const articleListUrl = `${apiBaseUrl}/articles/`;
+export const articleDetailUrl = (code: string) =>
+  `${apiBaseUrl}/articles/${code}/`;
+
 export const captchaUrl = `${apiBaseUrl}/captcha/`;
 
 export const EgdGetPlayerDataByDataUrl = (last_name: string) =>

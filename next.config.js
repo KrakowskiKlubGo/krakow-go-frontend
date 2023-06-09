@@ -9,10 +9,10 @@ const exportConfig = {
     unoptimized: true,
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        port: "",
-        pathname: `/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/**`,
+        protocol: process.env.NEXT_PUBLIC_IMAGE_STORAGE_PROTOCOL,
+        hostname: process.env.NEXT_PUBLIC_IMAGE_STORAGE_HOSTNAME,
+        port: process.env.NEXT_PUBLIC_IMAGE_STORAGE_PORT,
+        pathname: process.env.NEXT_PUBLIC_IMAGE_STORAGE_PATHNAME,
       },
     ],
   },
@@ -23,10 +23,10 @@ const devConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        port: "",
-        pathname: `/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/**`,
+        protocol: process.env.NEXT_PUBLIC_IMAGE_STORAGE_PROTOCOL,
+        hostname: process.env.NEXT_PUBLIC_IMAGE_STORAGE_HOSTNAME,
+        port: process.env.NEXT_PUBLIC_IMAGE_STORAGE_PORT,
+        pathname: process.env.NEXT_PUBLIC_IMAGE_STORAGE_PATHNAME,
       },
     ],
   },
