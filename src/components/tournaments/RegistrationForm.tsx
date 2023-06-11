@@ -181,6 +181,7 @@ const RegistrationForm: React.FC<Props> = ({
                     label={t("registration.email")}
                     defaultValue=""
                     type={"email"}
+                    required={registration_info.email_required}
                   />{" "}
                 </CenteredBox>
                 <CenteredBox>

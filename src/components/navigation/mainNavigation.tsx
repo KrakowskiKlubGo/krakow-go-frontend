@@ -28,6 +28,7 @@ import {
 } from "next-export-i18n";
 import Link from "next/link";
 import querystring from "querystring";
+import { MenuLink } from "@/consts/navigation/types";
 
 interface Props {
   /**
@@ -53,16 +54,19 @@ const MainAppBar: React.FC<Props> = (props) => {
     setMobileOpen((prevState) => !prevState);
   };
 
-  type MenuLink = {
-    href: string;
-    label: string;
-  };
-
-  const links: MenuLink[] = [
+  const links_pl: MenuLink[] = [
     { href: "/", label: t("common.home") },
-    { href: "/tournaments", label: t("common.tournaments") },
-    { href: "/contact", label: t("common.contact") },
+    { href: "/turnieje", label: t("common.tournaments") },
+    { href: "/kontakt", label: t("common.contact") },
   ];
+
+  const links_en: MenuLink[] = [
+    { href: "/", label: t("common.home") },
+    { href: "/turnieje", label: t("common.tournaments") },
+    { href: "/kontakt", label: t("common.contact") },
+  ];
+
+  const links = lang === "pl" ? links_pl : links_en;
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>

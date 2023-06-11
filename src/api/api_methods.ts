@@ -77,16 +77,8 @@ export const getArticleDetails = async (code: string, locale: string) => {
   return getDataFromBackend(articleDetailUrl(code), locale);
 };
 
-export const getAllTournamentsList = async (locale: string) => {
+export const getTournamentsList = async (locale: string) => {
   return getDataFromBackend(tournamentsListUrl, locale);
-};
-
-export const getIncomingTournamentsList = async (locale: string) => {
-  return getDataFromBackend(IncomingTournamentsListUrl, locale);
-};
-
-export const getEndedTournamentsList = async (locale: string) => {
-  return getDataFromBackend(EndedTournamentsListUrl, locale);
 };
 
 export const GetTournamentDetails = (code: string, locale: string) => {

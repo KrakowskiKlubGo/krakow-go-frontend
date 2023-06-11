@@ -36,7 +36,7 @@ const MeetingCard: React.FC<Props> = ({ meeting }) => {
       </CardContent>
       <CardActions>
         <Button
-          href={`/meetings/${meeting.code}/?${queryString}`}
+          href={`/spotkania/${meeting.code}/?${queryString}`}
           variant="contained"
         >
           {t("common.details_button_text")}
