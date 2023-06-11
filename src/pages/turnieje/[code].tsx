@@ -10,7 +10,7 @@ import {
   TournamentDetailSchema,
   TournamentListSchema,
 } from "@/consts/tournamens/types";
-import { GetTournamentDetails, getTournamentsList } from "@/api/api_methods";
+import { getAllTournamentsList, GetTournamentDetails } from "@/api/api_methods";
 import CenteredBox from "@/components/common/CenteredBox";
 import Image from "next/image";
 import TournamentResultsPanel from "@/components/tournaments/TournamentResultsPanel";
@@ -19,7 +19,7 @@ import { detailPageParams } from "@/consts/interfaces";
 import { useSelectedLanguage, useTranslation } from "next-export-i18n";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const tournaments: TournamentListSchema[] = await getTournamentsList("pl");
+  const tournaments: TournamentListSchema[] = await getAllTournamentsList("pl");
 
   const paths = tournaments.flatMap((tournament) => {
     return {
