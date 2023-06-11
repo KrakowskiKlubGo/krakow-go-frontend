@@ -1,3 +1,5 @@
+import { TournamentListSchema } from "@/consts/tournamens/types";
+
 const replacePolishMonthNames = (date: string): string => {
   const regex =
     /(styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|październik|listopad|grudzień)/g;
@@ -82,4 +84,28 @@ export const getLocalizedDayOfWeekString = (
   const weekday = dateObj.toLocaleString(locale, { weekday: "long" });
 
   return replacePolishMonthNames(`${dateObj.getDate()} ${month} (${weekday})`);
+};
+
+export const get_ended_tournaments = (
+  tournaments: TournamentListSchema[]
+): TournamentListSchema[] => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return tournaments.filter(
+    (tournament) =>
+      (tournament.end_date != null && new Date(tournament.end_date) < today) ||
+      (tournament.end_date == null && new Date(tournament.start_date) < today)
+  );
+};
+
+export const get_incoming_tournaments = (
+  tournaments: TournamentListSchema[]
+): TournamentListSchema[] => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return tournaments.filter(
+    (tournament) =>
+      (tournament.end_date != null && new Date(tournament.end_date) >= today) ||
+      (!tournament.end_date == null && new Date(tournament.start_date) >= today)
+  );
 };

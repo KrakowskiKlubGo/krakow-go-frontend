@@ -20,9 +20,7 @@ const TournamentsList: React.FC<Props> = ({ tournaments }) => {
     <List>
       {tournaments.map((tournament: TournamentListSchema) => (
         <ListItem key={tournament.code}>
-          <ListItemButton
-            href={`/tournaments/${tournament.code}?${queryString}`}
-          >
+          <ListItemButton href={`/turnieje/${tournament.code}?${queryString}`}>
             <ListItemText
               primary={tournament.name}
               secondary={getLocalizedMonthDateString(

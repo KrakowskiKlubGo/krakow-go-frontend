@@ -39,7 +39,7 @@ const TournamentCard: React.FC<Props> = ({ tournament }) => {
       <CardActions>
         <Button
           variant="contained"
-          href={`/tournaments/${tournament.code}/?${queryString}`}
+          href={`/turnieje/${tournament.code}/?${queryString}`}
         >
           {t("common.details_button_text")}
         </Button>

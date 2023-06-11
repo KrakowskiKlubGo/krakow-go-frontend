@@ -16,7 +16,7 @@ import * as React from "react";
 import Image from "next/image";
 import { useTranslation } from "next-export-i18n";
 
-export default function Contact() {
+export default function Kontakt() {
   const { t } = useTranslation();
   return (
     <Container maxWidth="sm">
@@ -40,7 +40,10 @@ export default function Contact() {
               <ListItemIcon>
                 <Facebook fontSize="large" sx={{ color: "#3b5998" }} />
               </ListItemIcon>
-              <Link href="https://www.facebook.com/" target="_blank">
+              <Link
+                href="https://www.facebook.com/Krakowski.Klub.Go/"
+                target="_blank"
+              >
                 <Typography>Facebook Krakowski Klub Go</Typography>
               </Link>
             </ListItem>

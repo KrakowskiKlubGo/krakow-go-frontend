@@ -56,6 +56,7 @@ export type RegistrationInfoSchema = {
   player_limit: number | null;
   registered_players: number;
   description: string | null;
+  email_required: boolean;
 };
 
 export type RegisteredPlayersSchema = {

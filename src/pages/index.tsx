@@ -5,7 +5,7 @@ import { TournamentListSchema } from "@/consts/tournamens/types";
 import TournamentCard from "@/components/index/tournamentCard";
 import { MeetingListSchema } from "@/consts/meetings/types";
 import React from "react";
-import { getMeetingsList, getIncomingTournamentsList } from "@/api/api_methods";
+import { getMeetingsList, getTournamentsList } from "@/api/api_methods";
 import { Container, Paper, Stack } from "@mui/material";
 import CenteredBox from "@/components/common/CenteredBox";
 import MeetingCard from "@/components/index/meetingCard";
@@ -20,12 +20,21 @@ import Meeting4 from "../../public/images/meeting4.jpg";
 import Meeting5 from "../../public/images/meeting5.jpg";
 import GobanCut from "../../public/images/goban-cut.png";
 import { useSelectedLanguage, useTranslation } from "next-export-i18n";
+import { get_incoming_tournaments } from "@/utils/functions";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const all_tournaments_pl: TournamentListSchema[] = await getTournamentsList(
+    "pl"
+  );
+  const all_tournaments_en: TournamentListSchema[] = await getTournamentsList(
+    "en"
+  );
+
   const tournaments_pl: TournamentListSchema[] =
-    await getIncomingTournamentsList("pl");
+    get_incoming_tournaments(all_tournaments_pl);
   const tournaments_en: TournamentListSchema[] =
-    await getIncomingTournamentsList("en");
+    get_incoming_tournaments(all_tournaments_en);
+
   const meetings_pl: MeetingListSchema[] = await getMeetingsList("pl");
   const meetings_en: MeetingListSchema[] = await getMeetingsList("en");
 

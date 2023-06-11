@@ -1,27 +1,24 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Box from "@mui/material/Box";
 import { Container, Paper, Typography } from "@mui/material";
-import {
-  getEndedTournamentsList,
-  getIncomingTournamentsList,
-} from "@/api/api_methods";
+import { getTournamentsList } from "@/api/api_methods";
 import { TournamentListSchema } from "@/consts/tournamens/types";
 import * as React from "react";
 import TournamentsList from "@/components/tournaments/TournamentsList";
 import { useSelectedLanguage, useTranslation } from "next-export-i18n";
+import {
+  get_ended_tournaments,
+  get_incoming_tournaments,
+} from "@/utils/functions";
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const ended_tournaments_pl: TournamentListSchema[] =
-    await getEndedTournamentsList("pl");
+  const tournaments_pl: TournamentListSchema[] = await getTournamentsList("pl");
+  const tournaments_en: TournamentListSchema[] = await getTournamentsList("en");
 
-  const incoming_tournaments_pl: TournamentListSchema[] =
-    await getIncomingTournamentsList("pl");
-
-  const ended_tournaments_en: TournamentListSchema[] =
-    await getEndedTournamentsList("en");
-
-  const incoming_tournaments_en: TournamentListSchema[] =
-    await getIncomingTournamentsList("en");
+  const ended_tournaments_pl = get_ended_tournaments(tournaments_pl);
+  const incoming_tournaments_pl = get_incoming_tournaments(tournaments_pl);
+  const ended_tournaments_en = get_ended_tournaments(tournaments_en);
+  const incoming_tournaments_en = get_incoming_tournaments(tournaments_en);
 
   return {
     props: {
