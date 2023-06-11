@@ -1,9 +1,7 @@
 import {
   articleDetailUrl,
   articleListUrl,
-  EgdGetPlayerDataByDataUrl,
-  EndedTournamentsListUrl,
-  IncomingTournamentsListUrl,
+  listedTournamentsListUrl,
   meetingDetailUrl,
   meetingsListUrl,
   tournamentDetailUrl,
@@ -78,6 +76,10 @@ export const getArticleDetails = async (code: string, locale: string) => {
 };
 
 export const getTournamentsList = async (locale: string) => {
+  return getDataFromBackend(listedTournamentsListUrl, locale);
+};
+
+export const getAllTournamentsList = async (locale: string) => {
   return getDataFromBackend(tournamentsListUrl, locale);
 };
 
