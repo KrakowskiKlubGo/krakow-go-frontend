@@ -1,7 +1,7 @@
 Frontend for Krakow Go Club site
 
 ## local setup
-example .env.local file wit local backend:
+example .env.local file with local backend:
 ```
 NEXT_PUBLIC_BACKEND_API_BASE_URL=http://127.0.0.1:8000/api
 NEXT_PUBLIC_BASE_PATH=http://127.0.0.1:3000/
