@@ -106,6 +106,6 @@ export const get_incoming_tournaments = (
   return tournaments.filter(
     (tournament) =>
       (tournament.end_date != null && new Date(tournament.end_date) >= today) ||
-      (!tournament.end_date == null && new Date(tournament.start_date) >= today)
+      (tournament.end_date == null && new Date(tournament.start_date) >= today)
   );
 };
