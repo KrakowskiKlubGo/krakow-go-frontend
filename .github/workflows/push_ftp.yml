@@ -4,6 +4,9 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
+  # every Thursday on 1 AM after club meeting
+  schedule:
+    - cron: "0 3 * * 4" 
   workflow_dispatch:
 jobs:
   build:
