@@ -1,4 +1,4 @@
-name: Deploy Next.js site FTP
+name: Deploy git FTP
 
 on:
   # Runs on pushes targeting the default branch
