@@ -65,6 +65,7 @@ jobs:
       - name: Upload site to FTP with git-ftp
         uses: sebastianpopp/git-ftp-action@releases/v3
         with:
-          url: ${{ secrets.ftp_location }}
+          url: ${{ secrets.ftp_location }}/public_html
           user: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }} 
+          syncroot: out
