@@ -37,7 +37,7 @@ const replacePolishMonthNames = (date: string): string => {
 export const getLocalizedMonthDateString = (
   locale: string,
   start_date_string: string,
-  end_date_string: string | null = null
+  end_date_string: string | null = null,
 ) => {
   let date_string;
   const start_date = new Date(start_date_string);
@@ -51,7 +51,7 @@ export const getLocalizedMonthDateString = (
         {
           month: "long",
           year: "numeric",
-        }
+        },
       )}`;
     } else if (start_date.getFullYear() === end_date.getFullYear()) {
       date_string = `${start_date.getDate()} ${start_date.toLocaleString(
@@ -59,7 +59,7 @@ export const getLocalizedMonthDateString = (
         {
           month: "long",
           year: "numeric",
-        }
+        },
       )} - ${end_date.getDate()} ${end_date.toLocaleString(locale, {
         month: "long",
         year: "numeric",
@@ -77,7 +77,7 @@ export const getLocalizedMonthDateString = (
 
 export const getLocalizedDayOfWeekString = (
   locale: string,
-  date: string
+  date: string,
 ): string => {
   const dateObj = new Date(date);
   const month = dateObj.toLocaleString(locale, { month: "long" });
@@ -87,25 +87,25 @@ export const getLocalizedDayOfWeekString = (
 };
 
 export const get_ended_tournaments = (
-  tournaments: TournamentListSchema[]
+  tournaments: TournamentListSchema[],
 ): TournamentListSchema[] => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return tournaments.filter(
     (tournament) =>
       (tournament.end_date != null && new Date(tournament.end_date) < today) ||
-      (tournament.end_date == null && new Date(tournament.start_date) < today)
+      (tournament.end_date == null && new Date(tournament.start_date) < today),
   );
 };
 
 export const get_incoming_tournaments = (
-  tournaments: TournamentListSchema[]
+  tournaments: TournamentListSchema[],
 ): TournamentListSchema[] => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return tournaments.filter(
     (tournament) =>
       (tournament.end_date != null && new Date(tournament.end_date) >= today) ||
-      (tournament.end_date == null && new Date(tournament.start_date) >= today)
+      (tournament.end_date == null && new Date(tournament.start_date) >= today),
   );
 };

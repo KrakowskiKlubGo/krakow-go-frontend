@@ -37,3 +37,5 @@ if (process.env.NODE_ENV === "development") {
 } else {
   module.exports = exportConfig;
 }
+
+module.exports = exportConfig;

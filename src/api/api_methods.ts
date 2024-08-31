@@ -8,10 +8,11 @@ import {
   tournamentRegistrationUrl,
   tournamentsListUrl,
 } from "@/consts/api/urls";
+import { TournamentListSchema } from "@/consts/tournamens/types";
 
 export const getDataFromBackend = async (
   api_url: string,
-  locale: string = ""
+  locale: string = "",
 ) => {
   try {
     const response = await fetch(api_url, {
@@ -35,7 +36,7 @@ export const getDataFromBackend = async (
 export const postDataToBackend = async (
   api_url: string,
   data: any,
-  locale: string
+  locale: string,
 ) => {
   try {
     const response = await fetch(api_url, {
@@ -75,7 +76,9 @@ export const getArticleDetails = async (code: string, locale: string) => {
   return getDataFromBackend(articleDetailUrl(code), locale);
 };
 
-export const getTournamentsList = async (locale: string) => {
+export const getTournamentsList = async (
+  locale: string,
+): Promise<TournamentListSchema[]> => {
   return getDataFromBackend(listedTournamentsListUrl, locale);
 };
 
@@ -90,7 +93,7 @@ export const GetTournamentDetails = (code: string, locale: string) => {
 export const registerPlayer = async (
   code: string,
   data: any,
-  locale: string
+  locale: string,
 ) => {
   return postDataToBackend(tournamentRegistrationUrl(code), data, locale);
 };
