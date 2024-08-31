@@ -1,4 +1,8 @@
+"use client";
 import { createTheme } from "@mui/material/styles";
+import { Varela_Round } from "@next/font/google";
+
+const varelaRound = Varela_Round({ weight: "400", subsets: ["latin"] });
 
 export const theme = createTheme({
   breakpoints: {
@@ -32,6 +36,6 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Varela Round",
+    fontFamily: varelaRound.style.fontFamily,
   },
 });
