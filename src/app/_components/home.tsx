@@ -97,42 +97,42 @@ export default function Home({ data }: any) {
         </Container>
       </Box>
 
-      <Container>
-        <Paper>
-          <ImageSection
-            image={Meeting1}
-            header={t("main.map_header")}
-            description={t("main.map_description")}
-            direction={"row-reverse"}
-          />
+      {/*<Container>*/}
+      {/*  <Paper>*/}
+      {/*    <ImageSection*/}
+      {/*      image={Meeting1}*/}
+      {/*      header={t("main.map_header")}*/}
+      {/*      description={t("main.map_description")}*/}
+      {/*      direction={"row-reverse"}*/}
+      {/*    />*/}
 
-          <ImageSection
-            image={Meeting2}
-            header={t("main.section_1_header")}
-            description={t("main.section_1_text")}
-          />
+      {/*    <ImageSection*/}
+      {/*      image={Meeting2}*/}
+      {/*      header={t("main.section_1_header")}*/}
+      {/*      description={t("main.section_1_text")}*/}
+      {/*    />*/}
 
-          <ImageSection
-            image={Meeting3}
-            header={t("main.section_2_header")}
-            description={t("main.section_2_text")}
-            direction={"row-reverse"}
-          />
+      {/*    <ImageSection*/}
+      {/*      image={Meeting3}*/}
+      {/*      header={t("main.section_2_header")}*/}
+      {/*      description={t("main.section_2_text")}*/}
+      {/*      direction={"row-reverse"}*/}
+      {/*    />*/}
 
-          <ImageSection
-            image={Meeting4}
-            header={t("main.section_3_header")}
-            description={t("main.section_3_text")}
-          />
+      {/*    <ImageSection*/}
+      {/*      image={Meeting4}*/}
+      {/*      header={t("main.section_3_header")}*/}
+      {/*      description={t("main.section_3_text")}*/}
+      {/*    />*/}
 
-          <ImageSection
-            image={Meeting5}
-            header={t("main.section_4_header")}
-            description={t("main.section_4_text")}
-            direction={"row-reverse"}
-          />
-        </Paper>
-      </Container>
+      {/*    <ImageSection*/}
+      {/*      image={Meeting5}*/}
+      {/*      header={t("main.section_4_header")}*/}
+      {/*      description={t("main.section_4_text")}*/}
+      {/*      direction={"row-reverse"}*/}
+      {/*    />*/}
+      {/*  </Paper>*/}
+      {/*</Container>*/}
     </>
   );
 }
